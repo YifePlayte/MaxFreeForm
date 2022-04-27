@@ -11,19 +11,39 @@ class XposedInit : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         EzXHelperInit.initHandleLoadPackage(lpparam)
         when (lpparam.packageName) {
-            "android" -> maxFreeFormCount(lpparam)
+            "android" -> {
+                maxFreeFormCount(lpparam)
+            }
         }
     }
 
     private fun maxFreeFormCount(lpparam: XC_LoadPackage.LoadPackageParam) {
-        findMethod("com.android.server.wm.MiuiFreeFormStackDisplayStrategy") {
-            name == "getMaxMiuiFreeFormStackCount"
-        }.hookMethod {
-            after { param ->
-                XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCount success!")
-                param.result = 256
+        try {
+            findMethod("com.android.server.wm.MiuiFreeFormStackDisplayStrategy") {
+                name == "getMaxMiuiFreeFormStackCount"
+            }.hookMethod {
+                after { param ->
+                    param.result = 256
+                }
             }
+            XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCount success!")
+        } catch (e: Throwable) {
+            XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCount failed!")
         }
-        XposedBridge.log("MaxFreeForm: Hook success!")
+    }
+
+    private fun multiWindowSupport(lpparam: XC_LoadPackage.LoadPackageParam) {
+        try {
+            findMethod("android.util.MiuiMultiWindowUtils") {
+                name == "multiFreeFormSupported"
+            }.hookMethod {
+                after { param ->
+                    param.result = true
+                }
+            }
+            XposedBridge.log("MaxFreeForm: Hook multiFreeFormSupported success!")
+        } catch (e: Throwable) {
+            XposedBridge.log("MaxFreeForm: Hook multiFreeFormSupported failed!")
+        }
     }
 }
