@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">MaxFreeForm</string>
-    <string name="xposeddescription">将小米平板5系列小窗最大数量修改为256个</string>
+    <string name="xposeddescription">Unlock multi freeform limits for MIUI 13 devices</string>
 </resources>
