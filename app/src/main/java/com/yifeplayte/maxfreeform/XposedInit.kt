@@ -8,11 +8,16 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 class XposedInit : IXposedHookLoadPackage {
+
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         EzXHelperInit.initHandleLoadPackage(lpparam)
         when (lpparam.packageName) {
             "android" -> {
                 maxFreeFormCount(lpparam)
+            }
+            "com.miui.home" -> {
+                canTaskEnterSmallWindow(lpparam)
+                canTaskEnterMiniSmallWindow(lpparam)
             }
         }
     }
@@ -32,6 +37,7 @@ class XposedInit : IXposedHookLoadPackage {
         }
     }
 
+    /*****
     private fun multiWindowSupport(lpparam: XC_LoadPackage.LoadPackageParam) {
         try {
             findMethod("android.util.MiuiMultiWindowUtils") {
@@ -46,4 +52,36 @@ class XposedInit : IXposedHookLoadPackage {
             XposedBridge.log("MaxFreeForm: Hook multiFreeFormSupported failed!")
         }
     }
+    *****/
+
+    private fun canTaskEnterSmallWindow(lpparam: XC_LoadPackage.LoadPackageParam) {
+        try {
+            findMethod("com.miui.home.launcher.RecentsAndFSGestureUtils") {
+                name == "canTaskEnterSmallWindow"
+            }.hookMethod {
+                after { param ->
+                    param.result = true
+                }
+            }
+            XposedBridge.log("MaxFreeForm: Hook canTaskEnterSmallWindow success!")
+        } catch (e: Throwable) {
+            XposedBridge.log("MaxFreeForm: Hook canTaskEnterSmallWindow failed!")
+        }
+    }
+
+    private fun canTaskEnterMiniSmallWindow(lpparam: XC_LoadPackage.LoadPackageParam) {
+        try {
+            findMethod("com.miui.home.launcher.RecentsAndFSGestureUtils") {
+                name == "canTaskEnterMiniSmallWindow"
+            }.hookMethod {
+                after { param ->
+                    param.result = true
+                }
+            }
+            XposedBridge.log("MaxFreeForm: Hook canTaskEnterMiniSmallWindow success!")
+        } catch (e: Throwable) {
+            XposedBridge.log("MaxFreeForm: Hook canTaskEnterMiniSmallWindow failed!")
+        }
+    }
+
 }
