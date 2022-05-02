@@ -10,8 +10,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://api.xposed.info/" }
+        maven("https://api.xposed.info/")
     }
 }
+
+include(":app")
 rootProject.name = "MaxFreeForm"
-include ':app'
+
