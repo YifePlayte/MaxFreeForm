@@ -28,7 +28,9 @@ class MainHook : IXposedHookLoadPackage {
             // Init hooks
             when (lpparam.packageName) {
                 "android" -> {
-                    initHooks(MaxFreeFormCount)
+                    initHooks(GetMaxMiuiFreeFormStackCount)
+                    initHooks(GetMaxMiuiFreeFormStackCountForFlashBack)
+                    initHooks(ShouldStopStartFreeform)
                 }
                 "com.miui.home" -> {
                     initHooks(CanTaskEnterSmallWindow)

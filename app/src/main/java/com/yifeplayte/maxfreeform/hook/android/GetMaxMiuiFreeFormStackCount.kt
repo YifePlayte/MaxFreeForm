@@ -5,7 +5,8 @@ import com.github.kyuubiran.ezxhelper.utils.hookMethod
 import com.yifeplayte.maxfreeform.hook.BaseHook
 import de.robv.android.xposed.XposedBridge
 
-object MaxFreeFormCount : BaseHook() {
+
+object GetMaxMiuiFreeFormStackCount : BaseHook() {
     override fun init() {
         try {
             findMethod("com.android.server.wm.MiuiFreeFormStackDisplayStrategy") {
@@ -19,5 +20,7 @@ object MaxFreeFormCount : BaseHook() {
         } catch (e: Throwable) {
             XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCount failed!")
         }
+
     }
+
 }

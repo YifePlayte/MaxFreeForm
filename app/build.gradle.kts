@@ -10,8 +10,8 @@ android {
         applicationId = "com.yifeplayte.maxfreeform"
         minSdk = 30
         targetSdk = 32
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 5
+        versionName = "1.4"
     }
 
     buildTypes {
