@@ -1,7 +1,6 @@
 package com.yifeplayte.maxfreeform.hook.systemui
 
 import com.github.kyuubiran.ezxhelper.utils.findMethod
-import com.github.kyuubiran.ezxhelper.utils.hookMethod
 import com.github.kyuubiran.ezxhelper.utils.hookReturnConstant
 import com.yifeplayte.maxfreeform.hook.BaseHook
 import de.robv.android.xposed.XposedBridge
@@ -17,4 +16,5 @@ object CanNotificationSlide : BaseHook() {
             XposedBridge.log("MaxFreeForm: Hook canSlide failed!")
         }
     }
+
 }

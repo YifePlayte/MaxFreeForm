@@ -1,10 +1,13 @@
 package com.yifeplayte.maxfreeform
 
-import com.yifeplayte.maxfreeform.hook.BaseHook
 import com.github.kyuubiran.ezxhelper.init.EzXHelperInit
 import com.github.kyuubiran.ezxhelper.utils.Log
 import com.github.kyuubiran.ezxhelper.utils.Log.logexIfThrow
-import com.yifeplayte.maxfreeform.hook.android.*
+import com.yifeplayte.maxfreeform.hook.BaseHook
+import com.yifeplayte.maxfreeform.hook.android.GetMaxMiuiFreeFormStackCount
+import com.yifeplayte.maxfreeform.hook.android.GetMaxMiuiFreeFormStackCountForFlashBack
+import com.yifeplayte.maxfreeform.hook.android.MultiFreeFormSupported
+import com.yifeplayte.maxfreeform.hook.android.ShouldStopStartFreeform
 import com.yifeplayte.maxfreeform.hook.home.CanTaskEnterMiniSmallWindow
 import com.yifeplayte.maxfreeform.hook.home.CanTaskEnterSmallWindow
 import com.yifeplayte.maxfreeform.hook.systemui.CanNotificationSlide
@@ -31,6 +34,7 @@ class MainHook : IXposedHookLoadPackage {
                     initHooks(GetMaxMiuiFreeFormStackCount)
                     initHooks(GetMaxMiuiFreeFormStackCountForFlashBack)
                     initHooks(ShouldStopStartFreeform)
+                    initHooks(MultiFreeFormSupported)
                 }
                 "com.miui.home" -> {
                     initHooks(CanTaskEnterSmallWindow)
@@ -53,4 +57,5 @@ class MainHook : IXposedHookLoadPackage {
             }.logexIfThrow("Failed init hook: ${it.javaClass.simpleName}")
         }
     }
+
 }

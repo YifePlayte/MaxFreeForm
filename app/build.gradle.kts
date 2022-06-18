@@ -10,8 +10,8 @@ android {
         applicationId = "com.yifeplayte.maxfreeform"
         minSdk = 30
         targetSdk = 32
-        versionCode = 5
-        versionName = "1.4"
+        versionCode = 6
+        versionName = "1.5"
     }
 
     buildTypes {
@@ -45,6 +45,6 @@ android {
 }
 
 dependencies {
-    implementation("com.github.kyuubiran:EzXHelper:0.8.8")
+    implementation("com.github.kyuubiran:EzXHelper:0.9.3")
     compileOnly("de.robv.android.xposed:api:82")
 }
