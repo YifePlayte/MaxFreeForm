@@ -10,6 +10,7 @@ import com.yifeplayte.maxfreeform.hook.android.MultiFreeFormSupported
 import com.yifeplayte.maxfreeform.hook.android.ShouldStopStartFreeform
 import com.yifeplayte.maxfreeform.hook.home.CanTaskEnterMiniSmallWindow
 import com.yifeplayte.maxfreeform.hook.home.CanTaskEnterSmallWindow
+import com.yifeplayte.maxfreeform.hook.securitycenter.IsSbnBelongToActiveBubbleApp
 import com.yifeplayte.maxfreeform.hook.systemui.CanNotificationSlide
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -18,7 +19,8 @@ private const val TAG = "MaxFreeForm"
 private val PACKAGE_NAME_HOOKED = setOf(
     "android",
     "com.miui.home",
-    "com.android.systemui"
+    "com.android.systemui",
+    "com.miui.securitycenter"
 )
 
 class MainHook : IXposedHookLoadPackage {
@@ -42,6 +44,9 @@ class MainHook : IXposedHookLoadPackage {
                 }
                 "com.android.systemui" -> {
                     initHooks(CanNotificationSlide)
+                }
+                "com.miui.securitycenter" -> {
+                    initHooks(IsSbnBelongToActiveBubbleApp)
                 }
             }
         }

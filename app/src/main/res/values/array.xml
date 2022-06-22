@@ -4,5 +4,6 @@
         <item>android</item>
         <item>com.miui.home</item>
         <item>com.android.systemui</item>
+        <item>com.miui.securitycenter</item>
     </string-array>
 </resources>
