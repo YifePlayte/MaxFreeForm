@@ -10,6 +10,7 @@ import com.yifeplayte.maxfreeform.hook.android.MultiFreeFormSupported
 import com.yifeplayte.maxfreeform.hook.android.ShouldStopStartFreeform
 import com.yifeplayte.maxfreeform.hook.home.CanTaskEnterMiniSmallWindow
 import com.yifeplayte.maxfreeform.hook.home.CanTaskEnterSmallWindow
+import com.yifeplayte.maxfreeform.hook.securitycenter.GetBubbleAppString
 import com.yifeplayte.maxfreeform.hook.securitycenter.IsSbnBelongToActiveBubbleApp
 import com.yifeplayte.maxfreeform.hook.systemui.CanNotificationSlide
 import de.robv.android.xposed.IXposedHookLoadPackage
@@ -47,6 +48,7 @@ class MainHook : IXposedHookLoadPackage {
                 }
                 "com.miui.securitycenter" -> {
                     initHooks(IsSbnBelongToActiveBubbleApp)
+                    initHooks(GetBubbleAppString)
                 }
             }
         }
