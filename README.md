@@ -4,3 +4,16 @@
 
 为各种MIUI13设备解除多小窗限制  
 Unlock multi freeform limits for MIUI 13 devices  
+
+---
+
+### 第三方开源引用
+##### GNU Lesser General Public License v2.1
+[577fkj/blockmiui](https://github.com/577fkj/blockmiui)  
+##### Apache License 2.0
+[KyuubiRan/EzXHelper](https://github.com/KyuubiRan/EzXHelper)  
+
+---
+
+### License
+[GNU General Public License v3.0](https://github.com/YifePlayte/MaxFreeForm/blob/main/LICENSE)
