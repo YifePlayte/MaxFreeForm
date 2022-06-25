@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="xposeddescription">为各种MIUI13设备解除多小窗限制</string>
+    <string name="xposed_description">为各种MIUI13设备解除多小窗限制</string>
+    <string name="tips">提示</string>
+    <string name="warning">警告</string>
+    <string name="not_support">您似乎正在使用过时的 LSPosed 版本或 LSPosed 未激活，请更新 LSPosed 或者激活后再试。</string>
+    <string name="side_hide_freeform">贴边小窗</string>
+    <string name="side_hide_freeform_tips">这将同时影响手机切后台时小窗的行为</string>
+    <string name="done">确定</string>
+    <string name="ignore_bubble_notification_settings">忽略气泡通知设置</string>
+    <string name="ignore_bubble_notification_settings_tips">忽略后所有贴边小窗应用收到通知时都将以气泡通知形式显示</string>
+    <string name="reboot">重启</string>
+    <string name="can_notification_slide_tips">一些通过Mi Push推送的通知可能不受支持</string>
+    <string name="can_notification_slide">允许大多数应用通知下拉展开小窗</string>
+    <string name="reboot_system">重启系统</string>
+    <string name="reboot_tips">确定重启系统？</string>
+    <string name="cancal">取消</string>
+    <string name="recents_to_small_freeform">进入最近任务页面时所有小窗转为迷你小窗</string>
+    <string name="recents_to_small_freeform_tips">MIUI的多迷你小窗逻辑不完整（本来官方就不打算支持多迷你小窗），所以启用后在多迷你小窗场景下很容易遇到异常行为，因此不建议开启。开启后遇到bug请不要反馈，除非你有办法修复。</string>
 </resources>

@@ -1,18 +1,19 @@
-package com.yifeplayte.maxfreeform
+package com.yifeplayte.maxfreeform.hook
 
 import com.github.kyuubiran.ezxhelper.init.EzXHelperInit
 import com.github.kyuubiran.ezxhelper.utils.Log
 import com.github.kyuubiran.ezxhelper.utils.Log.logexIfThrow
-import com.yifeplayte.maxfreeform.hook.BaseHook
-import com.yifeplayte.maxfreeform.hook.android.GetMaxMiuiFreeFormStackCount
-import com.yifeplayte.maxfreeform.hook.android.GetMaxMiuiFreeFormStackCountForFlashBack
-import com.yifeplayte.maxfreeform.hook.android.MultiFreeFormSupported
-import com.yifeplayte.maxfreeform.hook.android.ShouldStopStartFreeform
-import com.yifeplayte.maxfreeform.hook.home.CanTaskEnterMiniSmallWindow
-import com.yifeplayte.maxfreeform.hook.home.CanTaskEnterSmallWindow
-import com.yifeplayte.maxfreeform.hook.securitycenter.GetBubbleAppString
-import com.yifeplayte.maxfreeform.hook.securitycenter.IsSbnBelongToActiveBubbleApp
-import com.yifeplayte.maxfreeform.hook.systemui.CanNotificationSlide
+import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
+import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCount
+import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCountForFlashBack
+import com.yifeplayte.maxfreeform.hook.hooks.android.MultiFreeFormSupported
+import com.yifeplayte.maxfreeform.hook.hooks.android.ShouldStopStartFreeform
+import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterMiniSmallWindow
+import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterSmallWindow
+import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.GetBubbleAppString
+import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.IsSbnBelongToActiveBubbleApp
+import com.yifeplayte.maxfreeform.hook.hooks.systemui.CanNotificationSlide
+import com.yifeplayte.maxfreeform.util.Utils
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
@@ -37,18 +38,24 @@ class MainHook : IXposedHookLoadPackage {
                     initHooks(GetMaxMiuiFreeFormStackCount)
                     initHooks(GetMaxMiuiFreeFormStackCountForFlashBack)
                     initHooks(ShouldStopStartFreeform)
-                    initHooks(MultiFreeFormSupported)
+                    if (Utils.getBoolean("side_hide", true)) {
+                        initHooks(MultiFreeFormSupported)
+                    }
                 }
                 "com.miui.home" -> {
                     initHooks(CanTaskEnterSmallWindow)
                     initHooks(CanTaskEnterMiniSmallWindow)
                 }
                 "com.android.systemui" -> {
-                    initHooks(CanNotificationSlide)
+                    if (Utils.getBoolean("can_notification_slide", true)) {
+                        initHooks(CanNotificationSlide)
+                    }
                 }
                 "com.miui.securitycenter" -> {
-                    initHooks(IsSbnBelongToActiveBubbleApp)
-                    initHooks(GetBubbleAppString)
+                    if (Utils.getBoolean("side_hide_notification", true)) {
+                        initHooks(IsSbnBelongToActiveBubbleApp)
+                        initHooks(GetBubbleAppString)
+                    }
                 }
             }
         }

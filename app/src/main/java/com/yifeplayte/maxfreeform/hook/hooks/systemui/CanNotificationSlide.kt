@@ -1,8 +1,8 @@
-package com.yifeplayte.maxfreeform.hook.systemui
+package com.yifeplayte.maxfreeform.hook.hooks.systemui
 
 import com.github.kyuubiran.ezxhelper.utils.findMethod
 import com.github.kyuubiran.ezxhelper.utils.hookReturnConstant
-import com.yifeplayte.maxfreeform.hook.BaseHook
+import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import de.robv.android.xposed.XposedBridge
 
 object CanNotificationSlide : BaseHook() {

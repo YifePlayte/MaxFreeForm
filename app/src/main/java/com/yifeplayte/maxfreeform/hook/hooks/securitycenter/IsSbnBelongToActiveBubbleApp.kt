@@ -1,8 +1,8 @@
-package com.yifeplayte.maxfreeform.hook.securitycenter
+package com.yifeplayte.maxfreeform.hook.hooks.securitycenter
 
 import com.github.kyuubiran.ezxhelper.utils.findMethod
 import com.github.kyuubiran.ezxhelper.utils.hookReturnConstant
-import com.yifeplayte.maxfreeform.hook.BaseHook
+import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import de.robv.android.xposed.XposedBridge
 
 object IsSbnBelongToActiveBubbleApp : BaseHook() {

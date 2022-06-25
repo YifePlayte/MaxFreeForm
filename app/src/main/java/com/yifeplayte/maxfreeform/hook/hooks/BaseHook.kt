@@ -1,4 +1,4 @@
-package com.yifeplayte.maxfreeform.hook
+package com.yifeplayte.maxfreeform.hook.hooks
 
 abstract class BaseHook {
     var isInit: Boolean = false

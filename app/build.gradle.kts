@@ -10,8 +10,8 @@ android {
         applicationId = "com.yifeplayte.maxfreeform"
         minSdk = 30
         targetSdk = 32
-        versionCode = 8
-        versionName = "1.6.1"
+        versionCode = 9
+        versionName = "1.7.0"
     }
 
     buildTypes {
@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":blockmiui"))
     implementation("com.github.kyuubiran:EzXHelper:0.9.7")
     compileOnly("de.robv.android.xposed:api:82")
 }

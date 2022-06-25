@@ -1,1 +1,1 @@
--keep class com.yifeplayte.maxfreeform.MainHook
+-keep class com.yifeplayte.maxfreeform.hook.MainHook
