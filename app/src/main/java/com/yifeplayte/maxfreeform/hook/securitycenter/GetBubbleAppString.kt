@@ -14,14 +14,12 @@ object GetBubbleAppString : BaseHook() {
             }.hookBefore {
                 val stringBuilder = StringBuilder()
                 val mActiveBubbles = it.thisObject.getObject("mActiveBubbles")
-                val iterator = (mActiveBubbles as HashSet<*>).iterator()
-                while (iterator.hasNext()) {
-                    val next = iterator.next()
+                for (bubble in mActiveBubbles as HashSet<*>) {
                     stringBuilder.append(
-                        bubbleClass.getMethod("getPackageName").invokeAs<String>(next)
+                        bubbleClass.getMethod("getPackageName").invokeAs<String>(bubble)
                     )
                     stringBuilder.append(":")
-                    stringBuilder.append(next.getObject("userId"))
+                    stringBuilder.append(bubble.getObject("userId"))
                     stringBuilder.append(",")
                 }
                 it.result = stringBuilder.toString()
