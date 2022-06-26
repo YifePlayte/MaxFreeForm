@@ -4,12 +4,10 @@ import com.github.kyuubiran.ezxhelper.init.EzXHelperInit
 import com.github.kyuubiran.ezxhelper.utils.Log
 import com.github.kyuubiran.ezxhelper.utils.Log.logexIfThrow
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCount
-import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCountForFlashBack
-import com.yifeplayte.maxfreeform.hook.hooks.android.MultiFreeFormSupported
-import com.yifeplayte.maxfreeform.hook.hooks.android.ShouldStopStartFreeform
+import com.yifeplayte.maxfreeform.hook.hooks.android.*
 import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterMiniSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterSmallWindow
+import com.yifeplayte.maxfreeform.hook.hooks.home.StartSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.GetBubbleAppString
 import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.IsSbnBelongToActiveBubbleApp
 import com.yifeplayte.maxfreeform.hook.hooks.systemui.CanNotificationSlide
@@ -45,6 +43,7 @@ class MainHook : IXposedHookLoadPackage {
                 "com.miui.home" -> {
                     initHooks(CanTaskEnterSmallWindow)
                     initHooks(CanTaskEnterMiniSmallWindow)
+                    initHooks(StartSmallWindow)
                 }
                 "com.android.systemui" -> {
                     if (Utils.getBoolean("can_notification_slide", true)) {
