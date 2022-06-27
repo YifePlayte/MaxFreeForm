@@ -1,11 +1,9 @@
 package com.yifeplayte.maxfreeform.hook.hooks.home
 
-import android.R.attr.classLoader
 import com.github.kyuubiran.ezxhelper.utils.*
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
-import de.robv.android.xposed.XposedHelpers
 
 
 object StartSmallWindow : BaseHook() {
