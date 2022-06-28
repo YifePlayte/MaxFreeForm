@@ -72,7 +72,7 @@ class MainActivity : MIUIActivity() {
                         MIUIDialog(this@MainActivity) {
                             setTitle(R.string.warning)
                             setMessage(R.string.reboot_tips)
-                            setLButton(R.string.cancal) {
+                            setLButton(R.string.cancel) {
                                 dismiss()
                             }
                             setRButton(R.string.done) {
