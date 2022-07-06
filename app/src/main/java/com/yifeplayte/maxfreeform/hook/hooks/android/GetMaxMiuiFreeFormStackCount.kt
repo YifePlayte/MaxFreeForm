@@ -14,6 +14,7 @@ object GetMaxMiuiFreeFormStackCount : BaseHook() {
             XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCount success!")
         } catch (e: Throwable) {
             XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCount failed!")
+            XposedBridge.log(e)
         }
     }
 

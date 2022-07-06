@@ -34,6 +34,7 @@ object MultiFreeFormSupported : BaseHook() {
             }
         } catch (e: Throwable) {
             XposedBridge.log("MaxFreeForm: Hook multiFreeFormSupported failed!")
+            XposedBridge.log(e)
         }
     }
 

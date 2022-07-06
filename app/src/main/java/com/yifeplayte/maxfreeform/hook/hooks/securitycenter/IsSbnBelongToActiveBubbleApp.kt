@@ -14,6 +14,7 @@ object IsSbnBelongToActiveBubbleApp : BaseHook() {
             XposedBridge.log("MaxFreeForm: Hook isSbnBelongToActiveBubbleApp success!")
         } catch (e: Throwable) {
             XposedBridge.log("MaxFreeForm: Hook isSbnBelongToActiveBubbleApp failed!")
+            XposedBridge.log(e)
         }
     }
 

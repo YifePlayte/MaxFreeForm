@@ -14,6 +14,7 @@ object CanTaskEnterMiniSmallWindow : BaseHook() {
             XposedBridge.log("MaxFreeForm: Hook canTaskEnterMiniSmallWindow success!")
         } catch (e: Throwable) {
             XposedBridge.log("MaxFreeForm: Hook canTaskEnterMiniSmallWindow failed!")
+            XposedBridge.log(e)
         }
     }
 

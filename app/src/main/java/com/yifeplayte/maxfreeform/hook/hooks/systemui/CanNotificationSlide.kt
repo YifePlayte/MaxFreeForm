@@ -14,6 +14,7 @@ object CanNotificationSlide : BaseHook() {
             XposedBridge.log("MaxFreeForm: Hook canSlide success!")
         } catch (e: Throwable) {
             XposedBridge.log("MaxFreeForm: Hook canSlide failed!")
+            XposedBridge.log(e)
         }
     }
 

@@ -32,6 +32,7 @@ object StartSmallWindow : BaseHook() {
                             XposedBridge.log("MaxFreeForm: Hook getAllFreeFormStackInfosOnDisplay success!")
                         } catch (e: Throwable) {
                             XposedBridge.log("MaxFreeForm: Hook getAllFreeFormStackInfosOnDisplay failed!")
+                            XposedBridge.log(e)
                         }
                     }
                     findAllMethods("android.util.MiuiMultiWindowUtils") {
@@ -42,6 +43,7 @@ object StartSmallWindow : BaseHook() {
                     XposedBridge.log("MaxFreeForm: Hook startSmallFreeform success!")
                 } catch (e: Throwable) {
                     XposedBridge.log("MaxFreeForm: Hook startSmallFreeform failed!")
+                    XposedBridge.log(e)
                 }
             }
             findAllMethods("com.miui.home.recents.views.RecentsTopWindowCrop") {
@@ -52,6 +54,7 @@ object StartSmallWindow : BaseHook() {
             XposedBridge.log("MaxFreeForm: Hook startSmallWindow success!")
         } catch (e: Throwable) {
             XposedBridge.log("MaxFreeForm: Hook startSmallWindow failed!")
+            XposedBridge.log(e)
         }
     }
 

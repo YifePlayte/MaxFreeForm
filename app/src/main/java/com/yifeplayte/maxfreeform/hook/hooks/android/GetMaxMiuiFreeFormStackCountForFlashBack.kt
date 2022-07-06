@@ -14,6 +14,7 @@ object GetMaxMiuiFreeFormStackCountForFlashBack : BaseHook() {
             XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCountForFlashBack success!")
         } catch (e: Throwable) {
             XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCountForFlashBack failed!")
+            XposedBridge.log(e)
         }
     }
 

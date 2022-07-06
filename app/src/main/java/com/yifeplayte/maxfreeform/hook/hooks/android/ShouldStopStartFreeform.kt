@@ -14,6 +14,7 @@ object ShouldStopStartFreeform : BaseHook() {
             XposedBridge.log("MaxFreeForm: Hook shouldStopStartFreeform success!")
         } catch (e: Throwable) {
             XposedBridge.log("MaxFreeForm: Hook shouldStopStartFreeform failed!")
+            XposedBridge.log(e)
         }
     }
 
