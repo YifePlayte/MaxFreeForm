@@ -66,7 +66,7 @@ class MainActivity : MIUIActivity() {
                     SwitchV("recents_to_small_freeform", false)
                 )
                 Line()
-                TitleText(getString(R.string.more))
+                TitleText(textId = R.string.more)
                 TextSummaryArrow(
                     TextSummaryV(
                         textId = R.string.try_to_fix_conversation_bubbles,
@@ -81,9 +81,10 @@ class MainActivity : MIUIActivity() {
                     }
                 )
                 Line()
-                TitleText(getString(R.string.reboot))
-                TextSummaryArrow(
-                    TextSummaryV(getString(R.string.reboot_system)) {
+                TitleText(textId = R.string.reboot)
+                TextA(
+                    textId = R.string.reboot_system,
+                    onClickListener = {
                         MIUIDialog(this@MainActivity) {
                             setTitle(R.string.warning)
                             setMessage(R.string.reboot_tips)
