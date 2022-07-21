@@ -2,6 +2,7 @@ package com.yifeplayte.maxfreeform.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.Toast
 import cn.fkj233.ui.activity.MIUIActivity
 import cn.fkj233.ui.activity.view.SwitchV
 import cn.fkj233.ui.activity.view.TextSummaryV
@@ -65,8 +66,22 @@ class MainActivity : MIUIActivity() {
                     SwitchV("recents_to_small_freeform", false)
                 )
                 Line()
+                TitleText(getString(R.string.more))
+                TextSummaryArrow(
+                    TextSummaryV(
+                        textId = R.string.try_to_fix_conversation_bubbles,
+                        tipsId = R.string.try_to_fix_conversation_bubbles_tips
+                    ) {
+                        Utils.exec("pm enable com.miui.securitycenter/com.miui.bubbles.services.BubblesNotificationListenerService")
+                        Toast.makeText(
+                            this@MainActivity,
+                            getString(R.string.finished),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
+                Line()
                 TitleText(getString(R.string.reboot))
-                @Suppress("DEPRECATION")
                 TextSummaryArrow(
                     TextSummaryV(getString(R.string.reboot_system)) {
                         MIUIDialog(this@MainActivity) {

@@ -17,4 +17,8 @@
     <string name="reboot_system">Reboot system</string>
     <string name="recents_to_small_freeform_tips">Not recommended. The logic of multi-minifreeform is lacked in MIUI, so it\'s easy to meet bugs after enabling this function. Do NOT give feedback on this unless you have a way to fix it.</string>
     <string name="recents_to_small_freeform">Turn all floating windows into mini floating windows when entering Recents page</string>
+    <string name="try_to_fix_conversation_bubbles">Try to fix conversation bubbles</string>
+    <string name="try_to_fix_conversation_bubbles_tips">Try to fix conversation bubbles not showing by re-enabling conversation bubbles service</string>
+    <string name="more">More</string>
+    <string name="finished">Finished</string>
 </resources>
