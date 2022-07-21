@@ -18,7 +18,7 @@
     <string name="recents_to_small_freeform">进入最近任务页面时所有小窗转为迷你小窗</string>
     <string name="recents_to_small_freeform_tips">MIUI的多迷你小窗逻辑不完整（本来官方就不打算支持多迷你小窗），所以启用后在多迷你小窗场景下很容易遇到异常行为，因此不建议开启。开启后遇到bug请不要反馈，除非你有办法修复。</string>
     <string name="try_to_fix_conversation_bubbles">尝试修复气泡通知</string>
-    <string name="try_to_fix_conversation_bubbles_tips">尝试重新启用气泡通知服务以修复气泡通知</string>
+    <string name="try_to_fix_conversation_bubbles_tips">尝试重新启用气泡通知服务</string>
     <string name="more">更多</string>
     <string name="finished">运行完成</string>
     <string name="restart_all_scope">重启全部作用域</string>
