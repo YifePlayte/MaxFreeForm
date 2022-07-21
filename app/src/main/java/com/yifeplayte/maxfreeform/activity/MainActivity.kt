@@ -83,6 +83,31 @@ class MainActivity : MIUIActivity() {
                 Line()
                 TitleText(textId = R.string.reboot)
                 TextA(
+                    textId = R.string.restart_all_scope,
+                    onClickListener = {
+                        MIUIDialog(this@MainActivity) {
+                            setTitle(R.string.warning)
+                            setMessage(R.string.restart_all_scope_tips)
+                            setLButton(R.string.cancel) {
+                                dismiss()
+                            }
+                            setRButton(R.string.done) {
+                                val command = arrayOf(
+                                    "killall com.android.systemui",
+                                    "killall com.miui.home",
+                                    "killall com.miui.securitycenter",
+                                )
+                                Utils.exec(command)
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    getString(R.string.finished),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }.show()
+                    }
+                )
+                TextA(
                     textId = R.string.reboot_system,
                     onClickListener = {
                         MIUIDialog(this@MainActivity) {

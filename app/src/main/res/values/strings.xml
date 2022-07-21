@@ -21,4 +21,6 @@
     <string name="try_to_fix_conversation_bubbles_tips">Try to fix conversation bubbles not showing by re-enabling conversation bubbles service</string>
     <string name="more">More</string>
     <string name="finished">Finished</string>
+    <string name="restart_all_scope">Restart all scope</string>
+    <string name="restart_all_scope_tips">Are you sure to restart all scope?</string>
 </resources>

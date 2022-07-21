@@ -47,6 +47,15 @@ object Utils {
         }
     }
 
+    fun exec(command: Array<String>): String {
+        val stringBuilder = java.lang.StringBuilder()
+        for (c in command) {
+            stringBuilder.append(exec(c))
+            stringBuilder.append("\n")
+        }
+        return stringBuilder.toString()
+    }
+
     fun getBoolean(key: String, defValue: Boolean): Boolean {
         val prefs = XSharedPreferences(BuildConfig.APPLICATION_ID, "config")
         if (prefs.hasFileChanged()) {
