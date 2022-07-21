@@ -47,10 +47,10 @@ object Utils {
         }
     }
 
-    fun exec(command: Array<String>): String {
+    fun exec(commands: Array<String>): String {
         val stringBuilder = java.lang.StringBuilder()
-        for (c in command) {
-            stringBuilder.append(exec(c))
+        for (command in commands) {
+            stringBuilder.append(exec(command))
             stringBuilder.append("\n")
         }
         return stringBuilder.toString()
