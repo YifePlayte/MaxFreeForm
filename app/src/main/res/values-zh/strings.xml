@@ -4,11 +4,11 @@
     <string name="tips">提示</string>
     <string name="warning">警告</string>
     <string name="not_support">您似乎正在使用过时的 LSPosed 版本或 LSPosed 未激活，请更新 LSPosed 或者激活后再试。</string>
-    <string name="side_hide_freeform">贴边小窗</string>
-    <string name="side_hide_freeform_tips">这将同时影响手机切后台时小窗的行为</string>
+    <string name="side_hide_freeform">解锁贴边小窗</string>
+    <string name="side_hide_freeform_tips">为底层支持但受限制的设备解锁贴边小窗。这将同时影响手机切后台时小窗的行为</string>
     <string name="done">确定</string>
-    <string name="ignore_bubble_notification_settings">忽略气泡通知设置</string>
-    <string name="ignore_bubble_notification_settings_tips">忽略后所有贴边小窗应用收到通知时都将以气泡通知形式显示</string>
+    <string name="remove_conversation_bubble_settings_restriction">去除气泡通知应用限制</string>
+    <string name="remove_conversation_bubble_settings_restriction_tips">可以通过“系统设置 - 更多设置 - 自由窗口 - 气泡通知 - 气泡通知应用管理”管理贴边应用的通知</string>
     <string name="reboot">重启</string>
     <string name="can_notification_slide_tips">一些通过Mi Push推送的通知可能不受支持</string>
     <string name="can_notification_slide">允许大多数应用通知下拉展开小窗</string>
@@ -23,4 +23,5 @@
     <string name="finished">运行完成</string>
     <string name="restart_all_scope">重启全部作用域</string>
     <string name="restart_all_scope_tips">确定重启全部作用域？</string>
+    <string name="maxfreeform_tips">小窗数量限制已默认解锁</string>
 </resources>

@@ -5,10 +5,10 @@
     <string name="warning">Warning</string>
     <string name="not_support">You seem to be using an outdated version of LSPosed or LSPosed is not active, please update LSPosed or activate it and try again.</string>
     <string name="done">OK</string>
-    <string name="side_hide_freeform">Side-hide floating windows</string>
-    <string name="side_hide_freeform_tips">This will also affect the behavior of the floating windows while entering the Recents page</string>
-    <string name="ignore_bubble_notification_settings">Ignore conversation bubble settings</string>
-    <string name="ignore_bubble_notification_settings_tips">After ignoring, all notifications received by side-hide apps will show in bubbles</string>
+    <string name="side_hide_freeform">Unlock side-hide floating windows</string>
+    <string name="side_hide_freeform_tips">Unlock side-hide floating windows for supported but restricted devices. This will also affect the behavior of the floating windows while entering the Recents page</string>
+    <string name="remove_conversation_bubble_settings_restriction">Remove conversation bubble settings restriction</string>
+    <string name="remove_conversation_bubble_settings_restriction_tips">You can manage which apps can show conversation bubbles in \"System settings - Additional settings - Floating windows - Conversation bubbles - Manage conversation bubbles\"</string>
     <string name="can_notification_slide_tips">Some notifications through Mi Push may not be supported</string>
     <string name="reboot">Reboot</string>
     <string name="reboot_tips">Are you sure to reboot?</string>
@@ -23,4 +23,5 @@
     <string name="finished">Finished</string>
     <string name="restart_all_scope">Restart all scope</string>
     <string name="restart_all_scope_tips">Are you sure to restart all scope?</string>
+    <string name="maxfreeform_tips">Multi freeform number limit has been unlocked by default</string>
 </resources>

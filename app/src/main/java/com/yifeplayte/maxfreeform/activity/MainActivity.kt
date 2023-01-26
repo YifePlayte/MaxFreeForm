@@ -37,6 +37,7 @@ class MainActivity : MIUIActivity() {
     init {
         initView {
             registerMain(getString(R.string.app_name), false) {
+                TitleText(textId = R.string.maxfreeform_tips)
                 TextSummaryWithSwitch(
                     TextSummaryV(
                         textId = R.string.side_hide_freeform,
@@ -46,8 +47,8 @@ class MainActivity : MIUIActivity() {
                 )
                 TextSummaryWithSwitch(
                     TextSummaryV(
-                        textId = R.string.ignore_bubble_notification_settings,
-                        tipsId = R.string.ignore_bubble_notification_settings_tips
+                        textId = R.string.remove_conversation_bubble_settings_restriction,
+                        tipsId = R.string.remove_conversation_bubble_settings_restriction_tips
                     ),
                     SwitchV("side_hide_notification", true)
                 )
