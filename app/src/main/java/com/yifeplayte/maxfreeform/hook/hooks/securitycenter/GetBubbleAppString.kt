@@ -22,7 +22,7 @@ object GetBubbleAppString : BaseHook() {
                     stringBuilder.append(bubble.getObject("userId"))
                     stringBuilder.append(",")
                 }
-                XposedBridge.log("MaxFreeFormTest: getBubbleAppString called! Result:$stringBuilder")
+                // XposedBridge.log("MaxFreeFormTest: getBubbleAppString called! Result:$stringBuilder")
                 it.result = stringBuilder.toString()
             }
             XposedBridge.log("MaxFreeForm: Hook getBubbleAppString success!")

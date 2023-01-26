@@ -14,19 +14,19 @@ object StartSmallWindow : BaseHook() {
             findAllMethods("com.miui.home.recents.views.RecentsTopWindowCrop") {
                 name == "startSmallWindow"
             }.hookBefore {
-                XposedBridge.log("MaxFreeFormTest: startSmallWindow called!")
+                // XposedBridge.log("MaxFreeFormTest: startSmallWindow called!")
                 try {
                     hook1 = findAllMethods("android.util.MiuiMultiWindowUtils") {
                         name == "startSmallFreeform" && paramCount == 4
                     }.hookBefore {
-                        XposedBridge.log("MaxFreeFormTest: startSmallFreeform called!")
+                        // XposedBridge.log("MaxFreeFormTest: startSmallFreeform called!")
                         it.args[3] = false
-                        XposedBridge.log("MaxFreeFormTest: startSmallFreeform args changed!")
+                        // XposedBridge.log("MaxFreeFormTest: startSmallFreeform args changed!")
                         try {
                             hook2 = findAllMethods("miui.app.MiuiFreeFormManager") {
                                 name == "getAllFreeFormStackInfosOnDisplay"
                             }.hookBefore {
-                                XposedBridge.log("MaxFreeFormTest: getAllFreeFormStackInfosOnDisplay called!")
+                                // XposedBridge.log("MaxFreeFormTest: getAllFreeFormStackInfosOnDisplay called!")
                                 it.result = null
                             }
                             XposedBridge.log("MaxFreeForm: Hook getAllFreeFormStackInfosOnDisplay success!")
