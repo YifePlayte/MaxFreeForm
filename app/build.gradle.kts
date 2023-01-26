@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.yifeplayte.maxfreeform"
         minSdk = 30
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 11
         versionName = "1.8.0"
     }
