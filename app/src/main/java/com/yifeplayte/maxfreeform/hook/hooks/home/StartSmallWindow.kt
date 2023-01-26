@@ -25,9 +25,9 @@ object StartSmallWindow : BaseHook() {
                         try {
                             hook2 = findAllMethods("miui.app.MiuiFreeFormManager") {
                                 name == "getAllFreeFormStackInfosOnDisplay"
-                            }.hookBefore {
+                            }.hookBefore { param ->
                                 // XposedBridge.log("MaxFreeFormTest: getAllFreeFormStackInfosOnDisplay called!")
-                                it.result = null
+                                param.result = null
                             }
                             XposedBridge.log("MaxFreeForm: Hook getAllFreeFormStackInfosOnDisplay success!")
                         } catch (e: Throwable) {
