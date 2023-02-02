@@ -1,3 +1,6 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -19,6 +22,10 @@ android {
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles("proguard-rules.pro")
+        }
+        named("debug") {
+            versionNameSuffix = "-debug-" +
+                    DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now())
         }
     }
 
