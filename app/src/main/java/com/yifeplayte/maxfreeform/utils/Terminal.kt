@@ -1,13 +1,11 @@
-package com.yifeplayte.maxfreeform.util
+package com.yifeplayte.maxfreeform.utils
 
-import com.yifeplayte.maxfreeform.BuildConfig
-import de.robv.android.xposed.XSharedPreferences
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 
-object Utils {
+object Terminal {
     fun exec(command: String): String {
         var process: Process? = null
         var reader: BufferedReader? = null
@@ -54,14 +52,6 @@ object Utils {
             stringBuilder.append("\n")
         }
         return stringBuilder.toString()
-    }
-
-    fun getBoolean(key: String, defValue: Boolean): Boolean {
-        val prefs = XSharedPreferences(BuildConfig.APPLICATION_ID, "config")
-        if (prefs.hasFileChanged()) {
-            prefs.reload()
-        }
-        return prefs.getBoolean(key, defValue)
     }
 
 }

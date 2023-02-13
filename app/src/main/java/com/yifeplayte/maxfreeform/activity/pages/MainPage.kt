@@ -7,7 +7,7 @@ import cn.fkj233.ui.activity.view.SwitchV
 import cn.fkj233.ui.activity.view.TextSummaryV
 import cn.fkj233.ui.dialog.MIUIDialog
 import com.yifeplayte.maxfreeform.R
-import com.yifeplayte.maxfreeform.util.Utils
+import com.yifeplayte.maxfreeform.utils.Terminal
 
 @BMMainPage(titleId = R.string.app_name)
 class MainPage : BasePage() {
@@ -48,7 +48,7 @@ class MainPage : BasePage() {
                 textId = R.string.try_to_fix_conversation_bubbles,
                 tipsId = R.string.try_to_fix_conversation_bubbles_tips
             ) {
-                Utils.exec("pm enable com.miui.securitycenter/com.miui.bubbles.services.BubblesNotificationListenerService")
+                Terminal.exec("pm enable com.miui.securitycenter/com.miui.bubbles.services.BubblesNotificationListenerService")
                 Toast.makeText(
                     activity,
                     getString(R.string.finished),
@@ -74,7 +74,7 @@ class MainPage : BasePage() {
                             "killall com.miui.home",
                             "killall com.miui.securitycenter",
                         )
-                        Utils.exec(command)
+                        Terminal.exec(command)
                         Toast.makeText(
                             activity,
                             getString(R.string.finished),
@@ -95,7 +95,7 @@ class MainPage : BasePage() {
                         dismiss()
                     }
                     setRButton(R.string.done) {
-                        Utils.exec("/system/bin/sync;/system/bin/svc power reboot || reboot")
+                        Terminal.exec("/system/bin/sync;/system/bin/svc power reboot || reboot")
                     }
                 }.show()
             }

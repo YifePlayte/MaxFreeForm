@@ -13,7 +13,7 @@ import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.home.StartSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.GetDefaultBubbles
 import com.yifeplayte.maxfreeform.hook.hooks.systemui.CanNotificationSlide
-import com.yifeplayte.maxfreeform.util.Utils
+import com.yifeplayte.maxfreeform.utils.XSharedPreferences
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
@@ -38,7 +38,7 @@ class MainHook : IXposedHookLoadPackage {
                     initHooks(GetMaxMiuiFreeFormStackCount)
                     initHooks(GetMaxMiuiFreeFormStackCountForFlashBack)
                     initHooks(ShouldStopStartFreeform)
-                    if (Utils.getBoolean("side_hide", true)) {
+                    if (XSharedPreferences.getBoolean("side_hide", true)) {
                         initHooks(MultiFreeFormSupported)
                     }
                 }
@@ -48,12 +48,12 @@ class MainHook : IXposedHookLoadPackage {
                     initHooks(StartSmallWindow)
                 }
                 "com.android.systemui" -> {
-                    if (Utils.getBoolean("can_notification_slide", true)) {
+                    if (XSharedPreferences.getBoolean("can_notification_slide", true)) {
                         initHooks(CanNotificationSlide)
                     }
                 }
                 "com.miui.securitycenter" -> {
-                    if (Utils.getBoolean("side_hide_notification", true)) {
+                    if (XSharedPreferences.getBoolean("side_hide_notification", true)) {
                         // initHooks(IsSbnBelongToActiveBubbleApp)
                         // initHooks(GetBubbleAppString)
                         initHooks(GetDefaultBubbles)

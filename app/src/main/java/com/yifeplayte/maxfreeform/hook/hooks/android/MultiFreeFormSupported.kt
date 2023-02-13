@@ -4,13 +4,13 @@ import com.github.kyuubiran.ezxhelper.utils.findMethod
 import com.github.kyuubiran.ezxhelper.utils.hookBefore
 import com.github.kyuubiran.ezxhelper.utils.hookReturnConstant
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import com.yifeplayte.maxfreeform.util.Utils
+import com.yifeplayte.maxfreeform.utils.XSharedPreferences
 import de.robv.android.xposed.XposedBridge
 
 object MultiFreeFormSupported : BaseHook() {
     override fun init() {
         try {
-            if (Utils.getBoolean("recents_to_small_freeform", false)) {
+            if (XSharedPreferences.getBoolean("recents_to_small_freeform", false)) {
                 findMethod("android.util.MiuiMultiWindowUtils") {
                     name == "multiFreeFormSupported"
                 }.hookBefore {
