@@ -24,4 +24,6 @@
     <string name="restart_all_scope">Restart all scope</string>
     <string name="restart_all_scope_tips">Are you sure to restart all scope?</string>
     <string name="maxfreeform_tips">Multi freeform number limit has been unlocked by default</string>
+    <string name="remove_small_window_restrictions">Force enable floating window</string>
+    <string name="remove_small_window_restrictions_tips">Ignore system blacklist and software prohibition of small windows</string>
 </resources>

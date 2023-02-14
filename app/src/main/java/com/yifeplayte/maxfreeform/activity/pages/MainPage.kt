@@ -41,6 +41,13 @@ class MainPage : BasePage() {
             ),
             SwitchV("recents_to_small_freeform", false)
         )
+        TextSummaryWithSwitch(
+            TextSummaryV(
+                textId = R.string.remove_small_window_restrictions,
+                tipsId = R.string.remove_small_window_restrictions_tips
+            ),
+            SwitchV("remove_small_window_restrictions", true)
+        )
         Line()
         TitleText(textId = R.string.more)
         TextSummaryArrow(

@@ -4,10 +4,7 @@ import com.github.kyuubiran.ezxhelper.init.EzXHelperInit
 import com.github.kyuubiran.ezxhelper.utils.Log
 import com.github.kyuubiran.ezxhelper.utils.Log.logexIfThrow
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCount
-import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCountForFlashBack
-import com.yifeplayte.maxfreeform.hook.hooks.android.MultiFreeFormSupported
-import com.yifeplayte.maxfreeform.hook.hooks.android.ShouldStopStartFreeform
+import com.yifeplayte.maxfreeform.hook.hooks.android.*
 import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterMiniSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.home.StartSmallWindow
@@ -40,6 +37,9 @@ class MainHook : IXposedHookLoadPackage {
                     initHooks(ShouldStopStartFreeform)
                     if (XSharedPreferences.getBoolean("side_hide", true)) {
                         initHooks(MultiFreeFormSupported)
+                    }
+                    if (XSharedPreferences.getBoolean("remove_small_window_restrictions", true)) {
+                        initHooks(RemoveSmallWindowRestrictions)
                     }
                 }
                 "com.miui.home" -> {
