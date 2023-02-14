@@ -12,6 +12,8 @@ Unlock multi freeform limits for MIUI 13 devices
 [577fkj/blockmiui](https://github.com/577fkj/blockmiui)  
 ##### Apache License 2.0
 [KyuubiRan/EzXHelper](https://github.com/KyuubiRan/EzXHelper)  
+##### GNU General Public License v3.0
+[Simplicity-Team/WooBoxForMIUI](https://github.com/Simplicity-Team/WooBoxForMIUI)
 
 ---
 
