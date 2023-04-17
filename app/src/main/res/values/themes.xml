@@ -4,5 +4,7 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:forceDarkAllowed">true</item>
+        <item name="android:windowSplashScreenBackground">@color/windowSplashScreenBackground</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
     </style>
 </resources>
