@@ -14,6 +14,7 @@ class MainActivity : MIUIActivity() {
         super.onCreate(savedInstanceState)
     }
 
+    @Suppress("DEPRECATION")
     @SuppressLint("WorldReadableFiles")
     private fun checkLSPosed() {
         try {

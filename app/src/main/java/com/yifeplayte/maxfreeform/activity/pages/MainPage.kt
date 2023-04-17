@@ -1,5 +1,6 @@
 package com.yifeplayte.maxfreeform.activity.pages
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import cn.fkj233.ui.activity.annotation.BMMainPage
 import cn.fkj233.ui.activity.data.BasePage
@@ -9,6 +10,7 @@ import cn.fkj233.ui.dialog.MIUIDialog
 import com.yifeplayte.maxfreeform.R
 import com.yifeplayte.maxfreeform.utils.Terminal
 
+@SuppressLint("NonConstantResourceId")
 @BMMainPage(titleId = R.string.app_name)
 class MainPage : BasePage() {
     override fun onCreate() {
@@ -50,7 +52,7 @@ class MainPage : BasePage() {
         )
         Line()
         TitleText(textId = R.string.more)
-        TextSummaryArrow(
+        TextSummaryWithArrow(
             TextSummaryV(
                 textId = R.string.try_to_fix_conversation_bubbles,
                 tipsId = R.string.try_to_fix_conversation_bubbles_tips
@@ -65,7 +67,7 @@ class MainPage : BasePage() {
         )
         Line()
         TitleText(textId = R.string.reboot)
-        TextSummaryArrow(
+        TextSummaryWithArrow(
             TextSummaryV(
                 textId = R.string.restart_all_scope
             ) {
@@ -91,7 +93,7 @@ class MainPage : BasePage() {
                 }.show()
             }
         )
-        TextSummaryArrow(
+        TextSummaryWithArrow(
             TextSummaryV(
                 textId = R.string.reboot_system
             ) {
