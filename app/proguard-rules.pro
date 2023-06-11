@@ -1,1 +1,1 @@
--keep class com.yifeplayte.maxfreeform.hook.MainHook-keepattributes RuntimeVisibleAnnotations
+-keep class com.yifeplayte.maxfreeform.hook.MainHook { <init>(); }-keep class com.yifeplayte.maxfreeform.hook.hooks.**.** { <init>(); }-keepattributes RuntimeVisibleAnnotations

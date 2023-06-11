@@ -1,9 +1,7 @@
 package com.yifeplayte.maxfreeform.hook.hooks.securitycenter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.ArrayMap
-import com.github.kyuubiran.ezxhelper.ClassUtils
 import com.github.kyuubiran.ezxhelper.ClassUtils.invokeStaticMethodBestMatch
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
@@ -12,7 +10,6 @@ import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinde
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 
 object GetDefaultBubbles : BaseHook() {
-    @SuppressLint("PrivateApi")
     override fun init() {
         loadClass("com.miui.bubbles.settings.BubblesSettings").methodFinder().filterByName("getDefaultBubbles").first()
             .createHook {
@@ -24,13 +21,13 @@ object GetDefaultBubbles : BaseHook() {
                     val freeformSuggestionList = invokeStaticMethodBestMatch(
                         loadClass("android.util.MiuiMultiWindowUtils"), "getFreeformSuggestionList", null, mContext
                     ) as List<*>
-                    if (freeformSuggestionList.isNotEmpty()) {
-                        freeformSuggestionList.forEach {
-                            val bubbleApp = classBubbleApp.getConstructor(String::class.java, Int::class.java)
-                                .newInstance(it, mCurrentUserId)
-                            bubbleApp.objectHelper().invokeMethodBestMatch("setChecked", null, true)
-                            arrayMap[it as String] = bubbleApp
-                        }
+                    freeformSuggestionList.associateWith { pkg ->
+                        val bubbleApp = classBubbleApp.getConstructor(String::class.java, Int::class.java)
+                            .newInstance(pkg, mCurrentUserId)
+                        bubbleApp.objectHelper().invokeMethodBestMatch("setChecked", null, true)
+                        bubbleApp
+                    }.forEach { (pkg, bubbleApp) ->
+                        arrayMap[pkg as String] = bubbleApp
                     }
                     param.result = arrayMap
                 }

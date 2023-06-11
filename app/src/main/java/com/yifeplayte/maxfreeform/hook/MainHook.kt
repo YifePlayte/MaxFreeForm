@@ -71,5 +71,4 @@ class MainHook : IXposedHookLoadPackage {
             Log.ix("Inited hook: ${hook.javaClass.simpleName}")
         }.logexIfThrow("Failed init hook: ${hook.javaClass.simpleName}")
     }
-
 }

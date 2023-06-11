@@ -2,10 +2,10 @@ package com.yifeplayte.maxfreeform.hook.hooks.android
 
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.Log
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.hook.utils.XSharedPreferences.getBoolean
-import de.robv.android.xposed.XposedBridge
 
 object MultiFreeFormSupported : BaseHook() {
     override fun init() {
@@ -19,7 +19,7 @@ object MultiFreeFormSupported : BaseHook() {
                     }
                 }
             }
-            XposedBridge.log("MaxFreeForm: Hook multiFreeFormSupported with recents_to_small_freeform success!")
+            Log.ix("Inited hook: RecentsToSmallFreeform")
         } else {
             methodMultiFreeFormSupported.createHook {
                 returnConstant(true)
