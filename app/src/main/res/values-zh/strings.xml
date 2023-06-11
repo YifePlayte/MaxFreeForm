@@ -26,4 +26,7 @@
     <string name="maxfreeform_tips">小窗数量限制已默认解锁</string>
     <string name="remove_small_window_restrictions">强制允许小窗</string>
     <string name="remove_small_window_restrictions_tips">忽略系统黑名单与软件禁止小窗</string>
+    <string name="freeform">小窗</string>
+    <string name="new_task">多开</string>
+    <string name="add_freeform_shortcut">快捷菜单添加小窗与多开小窗</string>
 </resources>

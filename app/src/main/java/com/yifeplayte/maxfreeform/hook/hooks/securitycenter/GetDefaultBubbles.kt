@@ -14,7 +14,7 @@ object GetDefaultBubbles : BaseHook() {
         loadClass("com.miui.bubbles.settings.BubblesSettings").methodFinder().filterByName("getDefaultBubbles").first()
             .createHook {
                 before { param ->
-                    val classBubbleApp = loadClass("com.miui.bubbles.settings.BubbleApp")
+                    val clazzBubbleApp = loadClass("com.miui.bubbles.settings.BubbleApp")
                     val arrayMap = ArrayMap<String, Any>()
                     val mContext = param.thisObject.objectHelper().getObjectOrNullAs<Context>("mContext")
                     val mCurrentUserId = param.thisObject.objectHelper().getObjectOrNullAs<Int>("mCurrentUserId")
@@ -22,7 +22,7 @@ object GetDefaultBubbles : BaseHook() {
                         loadClass("android.util.MiuiMultiWindowUtils"), "getFreeformSuggestionList", null, mContext
                     ) as List<*>
                     freeformSuggestionList.associateWith { pkg ->
-                        val bubbleApp = classBubbleApp.getConstructor(String::class.java, Int::class.java)
+                        val bubbleApp = clazzBubbleApp.getConstructor(String::class.java, Int::class.java)
                             .newInstance(pkg, mCurrentUserId)
                         bubbleApp.objectHelper().invokeMethodBestMatch("setChecked", null, true)
                         bubbleApp

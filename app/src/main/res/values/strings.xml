@@ -26,4 +26,7 @@
     <string name="maxfreeform_tips">Multi freeform number limit has been unlocked by default</string>
     <string name="remove_small_window_restrictions">Force enable floating window</string>
     <string name="remove_small_window_restrictions_tips">Ignore system blacklist and software prohibition of small windows</string>
+    <string name="freeform">Freeform</string>
+    <string name="new_task">New task</string>
+    <string name="add_freeform_shortcut">Add freeform and new task shortcut</string>
 </resources>

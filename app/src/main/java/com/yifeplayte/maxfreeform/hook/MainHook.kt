@@ -9,6 +9,7 @@ import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCoun
 import com.yifeplayte.maxfreeform.hook.hooks.android.MultiFreeFormSupported
 import com.yifeplayte.maxfreeform.hook.hooks.android.RemoveSmallWindowRestrictions
 import com.yifeplayte.maxfreeform.hook.hooks.android.ShouldStopStartFreeform
+import com.yifeplayte.maxfreeform.hook.hooks.home.AddFreeformShortcut
 import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterMiniSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.home.StartSmallWindow
@@ -16,6 +17,7 @@ import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.GetDefaultBubbles
 import com.yifeplayte.maxfreeform.hook.hooks.systemui.CanNotificationSlide
 import com.yifeplayte.maxfreeform.hook.utils.XSharedPreferences.getBoolean
 import de.robv.android.xposed.IXposedHookLoadPackage
+import de.robv.android.xposed.IXposedHookZygoteInit
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 private const val TAG = "MaxFreeForm"
@@ -26,7 +28,8 @@ val PACKAGE_NAME_HOOKED = setOf(
     "com.miui.securitycenter"
 )
 
-class MainHook : IXposedHookLoadPackage {
+@Suppress("unused")
+class MainHook : IXposedHookLoadPackage, IXposedHookZygoteInit {
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         if (lpparam.packageName in PACKAGE_NAME_HOOKED) {
             // Init EzXHelper
@@ -47,6 +50,7 @@ class MainHook : IXposedHookLoadPackage {
                     initHook(CanTaskEnterSmallWindow)
                     initHook(CanTaskEnterMiniSmallWindow)
                     initHook(StartSmallWindow)
+                    initHook(AddFreeformShortcut, "add_freeform_shortcut")
                 }
 
                 "com.android.systemui" -> {
@@ -58,6 +62,10 @@ class MainHook : IXposedHookLoadPackage {
                 }
             }
         }
+    }
+
+    override fun initZygote(startupParam: IXposedHookZygoteInit.StartupParam) {
+        EzXHelper.initZygote(startupParam)
     }
 
     private fun initHook(hook: BaseHook, key: String, defValue: Boolean = false) =
