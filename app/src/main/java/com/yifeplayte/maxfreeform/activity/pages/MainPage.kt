@@ -8,6 +8,7 @@ import cn.fkj233.ui.activity.view.SwitchV
 import cn.fkj233.ui.activity.view.TextSummaryV
 import cn.fkj233.ui.dialog.MIUIDialog
 import com.yifeplayte.maxfreeform.R
+import com.yifeplayte.maxfreeform.hook.PACKAGE_NAME_HOOKED
 import com.yifeplayte.maxfreeform.utils.Terminal
 
 @SuppressLint("NonConstantResourceId")
@@ -78,17 +79,15 @@ class MainPage : BasePage() {
                         dismiss()
                     }
                     setRButton(R.string.done) {
-                        val command = arrayOf(
-                            "killall com.android.systemui",
-                            "killall com.miui.home",
-                            "killall com.miui.securitycenter",
-                        )
-                        Terminal.exec(command)
+                        PACKAGE_NAME_HOOKED.forEach {
+                            if (it != "android") Terminal.exec("killall $it")
+                        }
                         Toast.makeText(
                             activity,
                             getString(R.string.finished),
                             Toast.LENGTH_SHORT
                         ).show()
+                        dismiss()
                     }
                 }.show()
             }

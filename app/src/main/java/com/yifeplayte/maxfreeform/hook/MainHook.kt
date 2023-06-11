@@ -1,21 +1,25 @@
 package com.yifeplayte.maxfreeform.hook
 
-import com.github.kyuubiran.ezxhelper.init.EzXHelperInit
-import com.github.kyuubiran.ezxhelper.utils.Log
-import com.github.kyuubiran.ezxhelper.utils.Log.logexIfThrow
+import com.github.kyuubiran.ezxhelper.EzXHelper
+import com.github.kyuubiran.ezxhelper.Log
+import com.github.kyuubiran.ezxhelper.LogExtensions.logexIfThrow
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import com.yifeplayte.maxfreeform.hook.hooks.android.*
+import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCount
+import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCountForFlashBack
+import com.yifeplayte.maxfreeform.hook.hooks.android.MultiFreeFormSupported
+import com.yifeplayte.maxfreeform.hook.hooks.android.RemoveSmallWindowRestrictions
+import com.yifeplayte.maxfreeform.hook.hooks.android.ShouldStopStartFreeform
 import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterMiniSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.home.StartSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.GetDefaultBubbles
 import com.yifeplayte.maxfreeform.hook.hooks.systemui.CanNotificationSlide
-import com.yifeplayte.maxfreeform.utils.XSharedPreferences
+import com.yifeplayte.maxfreeform.hook.utils.XSharedPreferences.getBoolean
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 private const val TAG = "MaxFreeForm"
-private val PACKAGE_NAME_HOOKED = setOf(
+val PACKAGE_NAME_HOOKED = setOf(
     "android",
     "com.miui.home",
     "com.android.systemui",
@@ -26,52 +30,46 @@ class MainHook : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         if (lpparam.packageName in PACKAGE_NAME_HOOKED) {
             // Init EzXHelper
-            EzXHelperInit.initHandleLoadPackage(lpparam)
-            EzXHelperInit.setLogTag(TAG)
-            EzXHelperInit.setToastTag(TAG)
+            EzXHelper.initHandleLoadPackage(lpparam)
+            EzXHelper.setLogTag(TAG)
+            EzXHelper.setToastTag(TAG)
             // Init hooks
             when (lpparam.packageName) {
                 "android" -> {
-                    initHooks(GetMaxMiuiFreeFormStackCount)
-                    initHooks(GetMaxMiuiFreeFormStackCountForFlashBack)
-                    initHooks(ShouldStopStartFreeform)
-                    if (XSharedPreferences.getBoolean("side_hide", true)) {
-                        initHooks(MultiFreeFormSupported)
-                    }
-                    if (XSharedPreferences.getBoolean("remove_small_window_restrictions", true)) {
-                        initHooks(RemoveSmallWindowRestrictions)
-                    }
+                    initHook(GetMaxMiuiFreeFormStackCount)
+                    initHook(GetMaxMiuiFreeFormStackCountForFlashBack)
+                    initHook(ShouldStopStartFreeform)
+                    initHook(MultiFreeFormSupported, "side_hide", true)
+                    initHook(RemoveSmallWindowRestrictions, "remove_small_window_restrictions", true)
                 }
+
                 "com.miui.home" -> {
-                    initHooks(CanTaskEnterSmallWindow)
-                    initHooks(CanTaskEnterMiniSmallWindow)
-                    initHooks(StartSmallWindow)
+                    initHook(CanTaskEnterSmallWindow)
+                    initHook(CanTaskEnterMiniSmallWindow)
+                    initHook(StartSmallWindow)
                 }
+
                 "com.android.systemui" -> {
-                    if (XSharedPreferences.getBoolean("can_notification_slide", true)) {
-                        initHooks(CanNotificationSlide)
-                    }
+                    initHook(CanNotificationSlide, "can_notification_slide", true)
                 }
+
                 "com.miui.securitycenter" -> {
-                    if (XSharedPreferences.getBoolean("side_hide_notification", true)) {
-                        // initHooks(IsSbnBelongToActiveBubbleApp)
-                        // initHooks(GetBubbleAppString)
-                        initHooks(GetDefaultBubbles)
-                    }
+                    initHook(GetDefaultBubbles, "side_hide_notification", true)
                 }
             }
         }
     }
 
-    private fun initHooks(vararg hook: BaseHook) {
-        hook.forEach {
-            runCatching {
-                if (it.isInit) return@forEach
-                it.init()
-                it.isInit = true
-                Log.i("Inited hook: ${it.javaClass.simpleName}")
-            }.logexIfThrow("Failed init hook: ${it.javaClass.simpleName}")
-        }
+    private fun initHook(hook: BaseHook, key: String, defValue: Boolean = false) =
+        initHook(hook, getBoolean(key, defValue))
+
+    private fun initHook(hook: BaseHook, enable: Boolean = true) {
+        if (enable) runCatching {
+            if (hook.isInit) return
+            hook.init()
+            hook.isInit = true
+            Log.ix("Inited hook: ${hook.javaClass.simpleName}")
+        }.logexIfThrow("Failed init hook: ${hook.javaClass.simpleName}")
     }
 
 }

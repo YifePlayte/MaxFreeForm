@@ -1,21 +1,15 @@
 package com.yifeplayte.maxfreeform.hook.hooks.android
 
-import com.github.kyuubiran.ezxhelper.utils.findMethod
-import com.github.kyuubiran.ezxhelper.utils.hookReturnConstant
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import de.robv.android.xposed.XposedBridge
 
 object GetMaxMiuiFreeFormStackCountForFlashBack : BaseHook() {
     override fun init() {
-        try {
-            findMethod("com.android.server.wm.MiuiFreeFormStackDisplayStrategy") {
-                name == "getMaxMiuiFreeFormStackCountForFlashBack"
-            }.hookReturnConstant(256)
-            XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCountForFlashBack success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook getMaxMiuiFreeFormStackCountForFlashBack failed!")
-            XposedBridge.log(e)
-        }
+        loadClass("com.android.server.wm.MiuiFreeFormStackDisplayStrategy").methodFinder()
+            .filterByName("getMaxMiuiFreeFormStackCountForFlashBack").first().createHook {
+                returnConstant(256)
+            }
     }
-
 }

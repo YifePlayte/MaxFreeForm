@@ -1,21 +1,15 @@
 package com.yifeplayte.maxfreeform.hook.hooks.home
 
-import com.github.kyuubiran.ezxhelper.utils.findAllMethods
-import com.github.kyuubiran.ezxhelper.utils.hookReturnConstant
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import de.robv.android.xposed.XposedBridge
 
 object CanTaskEnterMiniSmallWindow : BaseHook() {
     override fun init() {
-        try {
-            findAllMethods("com.miui.home.launcher.RecentsAndFSGestureUtils") {
-                name == "canTaskEnterMiniSmallWindow"
-            }.hookReturnConstant(true)
-            XposedBridge.log("MaxFreeForm: Hook canTaskEnterMiniSmallWindow success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook canTaskEnterMiniSmallWindow failed!")
-            XposedBridge.log(e)
-        }
+        loadClass("com.miui.home.launcher.RecentsAndFSGestureUtils").methodFinder()
+            .filterByName("canTaskEnterMiniSmallWindow").toList().createHooks {
+                returnConstant(true)
+            }
     }
-
 }

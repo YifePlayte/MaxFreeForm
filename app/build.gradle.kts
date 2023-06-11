@@ -54,7 +54,7 @@ android {
 
 dependencies {
     implementation(project(":blockmiui"))
-    implementation("com.github.kyuubiran:EzXHelper:1.0.3")
+    implementation("com.github.kyuubiran:EzXHelper:2.0.5")
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
     compileOnly("de.robv.android.xposed:api:82")
 }

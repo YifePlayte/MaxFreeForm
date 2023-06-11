@@ -1,21 +1,15 @@
 package com.yifeplayte.maxfreeform.hook.hooks.android
 
-import com.github.kyuubiran.ezxhelper.utils.findMethod
-import com.github.kyuubiran.ezxhelper.utils.hookReturnConstant
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import de.robv.android.xposed.XposedBridge
 
 object ShouldStopStartFreeform : BaseHook() {
     override fun init() {
-        try {
-            findMethod("com.android.server.wm.MiuiFreeFormManagerService") {
-                name == "shouldStopStartFreeform"
-            }.hookReturnConstant(false)
-            XposedBridge.log("MaxFreeForm: Hook shouldStopStartFreeform success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook shouldStopStartFreeform failed!")
-            XposedBridge.log(e)
+        loadClass("com.android.server.wm.MiuiFreeFormManagerService").methodFinder()
+            .filterByName("shouldStopStartFreeform").first().createHook {
+            returnConstant(false)
         }
     }
-
 }

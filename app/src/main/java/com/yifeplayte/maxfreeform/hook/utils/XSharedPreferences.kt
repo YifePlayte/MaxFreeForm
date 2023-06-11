@@ -1,4 +1,4 @@
-package com.yifeplayte.maxfreeform.utils
+package com.yifeplayte.maxfreeform.hook.utils
 
 import com.yifeplayte.maxfreeform.BuildConfig
 import de.robv.android.xposed.XSharedPreferences

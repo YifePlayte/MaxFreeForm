@@ -1,61 +1,36 @@
 package com.yifeplayte.maxfreeform.hook.hooks.home
 
-import com.github.kyuubiran.ezxhelper.utils.*
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import de.robv.android.xposed.XC_MethodHook
-import de.robv.android.xposed.XposedBridge
 
 
 object StartSmallWindow : BaseHook() {
     override fun init() {
-        try {
-            var hook1: List<XC_MethodHook.Unhook>? = null
-            var hook2: List<XC_MethodHook.Unhook>? = null
-            findAllMethods("com.miui.home.recents.views.RecentsTopWindowCrop") {
-                name == "startSmallWindow"
-            }.hookBefore {
-                // XposedBridge.log("MaxFreeFormTest: startSmallWindow called!")
-                try {
-                    hook1 = findAllMethods("android.util.MiuiMultiWindowUtils") {
-                        name == "startSmallFreeform" && paramCount == 4
-                    }.hookBefore {
-                        // XposedBridge.log("MaxFreeFormTest: startSmallFreeform called!")
-                        it.args[3] = false
-                        // XposedBridge.log("MaxFreeFormTest: startSmallFreeform args changed!")
-                        try {
-                            hook2 = findAllMethods("miui.app.MiuiFreeFormManager") {
-                                name == "getAllFreeFormStackInfosOnDisplay"
-                            }.hookBefore { param ->
-                                // XposedBridge.log("MaxFreeFormTest: getAllFreeFormStackInfosOnDisplay called!")
-                                param.result = null
+        var hook1: List<XC_MethodHook.Unhook>? = null
+        var hook2: List<XC_MethodHook.Unhook>? = null
+        loadClass("com.miui.home.recents.views.RecentsTopWindowCrop").methodFinder().filterByName("startSmallWindow")
+            .toList().createHooks {
+                before {
+                    hook1 = loadClass("android.util.MiuiMultiWindowUtils").methodFinder()
+                        .filterByName("startSmallFreeform").filterByParamCount(4).toList().createHooks {
+                            before {
+                                it.args[3] = false
+                                hook2 = loadClass("miui.app.MiuiFreeFormManager").methodFinder()
+                                    .filterByName("getAllFreeFormStackInfosOnDisplay").toList().createHooks {
+                                        returnConstant(null)
+                                    }
                             }
-                            XposedBridge.log("MaxFreeForm: Hook getAllFreeFormStackInfosOnDisplay success!")
-                        } catch (e: Throwable) {
-                            XposedBridge.log("MaxFreeForm: Hook getAllFreeFormStackInfosOnDisplay failed!")
-                            XposedBridge.log(e)
+                            after {
+                                hook2?.forEach { it.unhook() }
+                            }
                         }
-                    }
-                    findAllMethods("android.util.MiuiMultiWindowUtils") {
-                        name == "startSmallFreeform"
-                    }.hookAfter {
-                        hook2?.unhookAll()
-                    }
-                    XposedBridge.log("MaxFreeForm: Hook startSmallFreeform success!")
-                } catch (e: Throwable) {
-                    XposedBridge.log("MaxFreeForm: Hook startSmallFreeform failed!")
-                    XposedBridge.log(e)
+                }
+                after {
+                    hook1?.forEach { it.unhook() }
                 }
             }
-            findAllMethods("com.miui.home.recents.views.RecentsTopWindowCrop") {
-                name == "startSmallWindow"
-            }.hookAfter {
-                hook1?.unhookAll()
-            }
-            XposedBridge.log("MaxFreeForm: Hook startSmallWindow success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook startSmallWindow failed!")
-            XposedBridge.log(e)
-        }
     }
-
 }

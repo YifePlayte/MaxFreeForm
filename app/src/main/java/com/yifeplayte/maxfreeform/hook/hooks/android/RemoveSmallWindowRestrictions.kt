@@ -1,132 +1,64 @@
 package com.yifeplayte.maxfreeform.hook.hooks.android
 
-import android.content.ContentResolver
-import android.content.Context
-import com.github.kyuubiran.ezxhelper.utils.*
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
+import com.github.kyuubiran.ezxhelper.ObjectHelper.Companion.objectHelper
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import de.robv.android.xposed.XposedBridge
 
 object RemoveSmallWindowRestrictions : BaseHook() {
     override fun init() {
-        // try {
-        //     findAllMethods("android.provider.Settings\$Global") {
-        //         name == "getInt"
-        //     }.hookAfter { param ->
-        //         XposedBridge.log("MaxFreeFormTest: android.provider.Settings\$Global.getInt called! param.args[1]: " + param.args[1])
-        //         if (param.args[1] == "enable_non_resizable_multi_window") {
-        //             val e = Throwable()
-        //             XposedBridge.log(e)
-        //             param.result = 1
-        //         }
-        //     }
-        //     XposedBridge.log("MaxFreeForm: Hook android.provider.Settings\$Global.getInt success!")
-        // } catch (e: Throwable) {
-        //     XposedBridge.log("MaxFreeForm: Hook android.provider.Settings\$Global.getInt failed!")
-        //     XposedBridge.log(e)
-        // }
-        //
-        try {
-            findAllMethods("com.android.server.wm.ActivityTaskManagerService") {
-                name == "retrieveSettings"
-            }.hookAfter { param ->
-                param.thisObject.javaClass.field("mDevEnableNonResizableMultiWindow")
-                    .setBoolean(param.thisObject, true)
-            }
-            XposedBridge.log("MaxFreeForm: Hook retrieveSettings success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook retrieveSettings failed!")
-            XposedBridge.log(e)
+        runCatching {
+            loadClass("com.android.server.wm.ActivityTaskManagerService").methodFinder()
+                .filterByName("retrieveSettings").toList().createHooks {
+                    after {
+                        it.thisObject.objectHelper().setObject("mDevEnableNonResizableMultiWindow", true)
+                    }
+                }
         }
 
-        try {
-            findAllMethods("com.android.server.wm.WindowManagerService\$SettingsObserver") {
-                name == "updateDevEnableNonResizableMultiWindow"
-            }.hookAfter { param ->
-                val this0 = param.thisObject.javaClass.field("this\$0").get(param.thisObject)
-                val mAtmService = this0.javaClass.field("mAtmService").get(this0)
-                mAtmService.javaClass.field("mDevEnableNonResizableMultiWindow").setBoolean(mAtmService,true)
+        runCatching {
+            loadClass("com.android.server.wm.WindowManagerService\$SettingsObserver").methodFinder().filter {
+                name in setOf("updateDevEnableNonResizableMultiWindow", "onChange")
+            }.toList().createHooks {
+                after {
+                    val this0 = it.thisObject.objectHelper().getObjectOrNull("this\$0")!!
+                    val mAtmService = this0.objectHelper().getObjectOrNull("mAtmService")!!
+                    mAtmService.objectHelper().setObject("mDevEnableNonResizableMultiWindow", true)
+                }
             }
-            XposedBridge.log("MaxFreeForm: Hook updateDevEnableNonResizableMultiWindow success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook updateDevEnableNonResizableMultiWindow failed!")
-            XposedBridge.log(e)
         }
 
-        try {
-            findAllMethods("com.android.server.wm.WindowManagerService\$SettingsObserver") {
-                name == "onChange"
-            }.hookAfter { param ->
-                val this0 = param.thisObject.javaClass.field("this\$0").get(param.thisObject)
-                val mAtmService = this0.javaClass.field("mAtmService").get(this0)
-                mAtmService.javaClass.field("mDevEnableNonResizableMultiWindow").setBoolean(mAtmService,true)
-            }
-            XposedBridge.log("MaxFreeForm: Hook WindowManagerService\$SettingsObserver.onChange success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook WindowManagerService\$SettingsObserver.onChange failed!")
-            XposedBridge.log(e)
-        }
-
-        try {
-            findMethod("android.util.MiuiMultiWindowUtils") {
-                name == "isForceResizeable"
-            }.hookReturnConstant(true)
-            XposedBridge.log("MaxFreeForm: Hook isForceResizeable success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook isForceResizeable failed!")
-            XposedBridge.log(e)
+        runCatching {
+            loadClass("android.util.MiuiMultiWindowUtils").methodFinder().filterByName("isForceResizeable").first()
+                .createHook {
+                    returnConstant(true)
+                }
         }
 
         // Author: LittleTurtle2333
-        try {
-            findMethod("com.android.server.wm.Task") {
-                name == "isResizeable"
-            }.hookReturnConstant(true)
-            XposedBridge.log("MaxFreeForm: Hook isResizeable success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook isResizeable failed!")
-            XposedBridge.log(e)
+        runCatching {
+            loadClass("com.android.server.wm.Task").methodFinder().filterByName("isResizeable").first().createHook {
+                returnConstant(true)
+            }
         }
 
-        try {
-            findMethod("android.util.MiuiMultiWindowAdapter") {
-                name == "getFreeformBlackList"
-            }.hookReturnConstant(mutableListOf<String>())
-            XposedBridge.log("MaxFreeForm: Hook getFreeformBlackList success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook getFreeformBlackList failed!")
-            XposedBridge.log(e)
+        runCatching {
+            loadClass("android.util.MiuiMultiWindowAdapter").methodFinder().filter {
+                name in setOf(
+                    "getFreeformBlackList", "getFreeformBlackListFromCloud", "getStartFromFreeformBlackListFromCloud"
+                )
+            }.toList().createHooks {
+                returnConstant(mutableListOf<String>())
+            }
         }
 
-        try {
-            findMethod("android.util.MiuiMultiWindowAdapter") {
-                name == "getFreeformBlackListFromCloud" && parameterTypes[0] == Context::class.java
-            }.hookReturnConstant(mutableListOf<String>())
-            XposedBridge.log("MaxFreeForm: Hook getFreeformBlackListFromCloud success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook getFreeformBlackListFromCloud failed!")
-            XposedBridge.log(e)
+        runCatching {
+            loadClass("android.util.MiuiMultiWindowUtils").methodFinder().filterByName("supportFreeform").first()
+                .createHook {
+                    returnConstant(true)
+                }
         }
-
-        try {
-            findAllMethods("android.util.MiuiMultiWindowAdapter") {
-                name == "getStartFromFreeformBlackListFromCloud"
-            }.hookReturnConstant(mutableListOf<String>())
-            XposedBridge.log("MaxFreeForm: Hook getStartFromFreeformBlackListFromCloud success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook getStartFromFreeformBlackListFromCloud failed!")
-            XposedBridge.log(e)
-        }
-
-        try {
-            findMethod("android.util.MiuiMultiWindowUtils") {
-                name == "supportFreeform"
-            }.hookReturnConstant(true)
-            XposedBridge.log("MaxFreeForm: Hook supportFreeform success!")
-        } catch (e: Throwable) {
-            XposedBridge.log("MaxFreeForm: Hook supportFreeform failed!")
-            XposedBridge.log(e)
-        }
-
     }
-
 }
