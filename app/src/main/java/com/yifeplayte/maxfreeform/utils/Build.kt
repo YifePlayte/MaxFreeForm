@@ -1,4 +1,4 @@
-package com.yifeplayte.maxfreeform.hook.utils
+package com.yifeplayte.maxfreeform.utils
 
 import com.github.kyuubiran.ezxhelper.ClassUtils.getStaticObjectOrNullAs
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass

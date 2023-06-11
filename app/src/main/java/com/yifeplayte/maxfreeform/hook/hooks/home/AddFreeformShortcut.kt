@@ -20,7 +20,7 @@ import com.github.kyuubiran.ezxhelper.ObjectUtils.invokeMethodBestMatch
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.R
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import com.yifeplayte.maxfreeform.hook.utils.Build.IS_TABLET
+import com.yifeplayte.maxfreeform.utils.Build.IS_TABLET
 
 object AddFreeformShortcut : BaseHook() {
     override fun init() {
