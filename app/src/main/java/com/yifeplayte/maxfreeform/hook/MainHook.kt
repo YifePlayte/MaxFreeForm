@@ -4,16 +4,12 @@ import com.github.kyuubiran.ezxhelper.EzXHelper
 import com.github.kyuubiran.ezxhelper.Log
 import com.github.kyuubiran.ezxhelper.LogExtensions.logexIfThrow
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCount
-import com.yifeplayte.maxfreeform.hook.hooks.android.GetMaxMiuiFreeFormStackCountForFlashBack
-import com.yifeplayte.maxfreeform.hook.hooks.android.MultiFreeFormSupported
 import com.yifeplayte.maxfreeform.hook.hooks.android.RemoveSmallWindowRestrictions
-import com.yifeplayte.maxfreeform.hook.hooks.android.ShouldStopStartFreeform
+import com.yifeplayte.maxfreeform.hook.hooks.android.UnlockFreeformQuantityLimit
+import com.yifeplayte.maxfreeform.hook.hooks.android.UnlockSideHideFreeform
 import com.yifeplayte.maxfreeform.hook.hooks.home.AddFreeformShortcut
-import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterMiniSmallWindow
-import com.yifeplayte.maxfreeform.hook.hooks.home.CanTaskEnterSmallWindow
-import com.yifeplayte.maxfreeform.hook.hooks.home.StartSmallWindow
-import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.GetDefaultBubbles
+import com.yifeplayte.maxfreeform.hook.hooks.home.UnlockEnterSmallWindow
+import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.RemoveConversationBubbleSettingsRestriction
 import com.yifeplayte.maxfreeform.hook.hooks.systemui.CanNotificationSlide
 import com.yifeplayte.maxfreeform.hook.utils.XSharedPreferences.getBoolean
 import de.robv.android.xposed.IXposedHookLoadPackage
@@ -25,40 +21,41 @@ val PACKAGE_NAME_HOOKED = setOf(
     "android",
     "com.miui.home",
     "com.android.systemui",
-    "com.miui.securitycenter"
+    "com.miui.securitycenter",
 )
 
 @Suppress("unused")
 class MainHook : IXposedHookLoadPackage, IXposedHookZygoteInit {
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         if (lpparam.packageName in PACKAGE_NAME_HOOKED) {
+
             // Init EzXHelper
             EzXHelper.initHandleLoadPackage(lpparam)
             EzXHelper.setLogTag(TAG)
             EzXHelper.setToastTag(TAG)
+
             // Init hooks
             when (lpparam.packageName) {
                 "android" -> {
-                    initHook(GetMaxMiuiFreeFormStackCount)
-                    initHook(GetMaxMiuiFreeFormStackCountForFlashBack)
-                    initHook(ShouldStopStartFreeform)
-                    initHook(MultiFreeFormSupported, "side_hide", true)
-                    initHook(RemoveSmallWindowRestrictions, "remove_small_window_restrictions", true)
+                    initHook(UnlockFreeformQuantityLimit)
+                    initHook(UnlockSideHideFreeform, "unlock_side_hide_freeform")
+                    initHook(RemoveSmallWindowRestrictions, "remove_small_window_restrictions")
                 }
 
                 "com.miui.home" -> {
-                    initHook(CanTaskEnterSmallWindow)
-                    initHook(CanTaskEnterMiniSmallWindow)
-                    initHook(StartSmallWindow)
+                    initHook(UnlockEnterSmallWindow)
                     initHook(AddFreeformShortcut, "add_freeform_shortcut")
                 }
 
                 "com.android.systemui" -> {
-                    initHook(CanNotificationSlide, "can_notification_slide", true)
+                    initHook(CanNotificationSlide, "can_notification_slide")
                 }
 
                 "com.miui.securitycenter" -> {
-                    initHook(GetDefaultBubbles, "side_hide_notification", true)
+                    initHook(
+                        RemoveConversationBubbleSettingsRestriction,
+                        "remove_conversation_bubble_settings_restriction"
+                    )
                 }
             }
         }

@@ -5,11 +5,11 @@ import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 
-object GetMaxMiuiFreeFormStackCountForFlashBack : BaseHook() {
+object UnlockSideHideFreeform : BaseHook() {
     override fun init() {
-        loadClass("com.android.server.wm.MiuiFreeFormStackDisplayStrategy").methodFinder()
-            .filterByName("getMaxMiuiFreeFormStackCountForFlashBack").first().createHook {
-                returnConstant(256)
+        loadClass("android.util.MiuiMultiWindowUtils").methodFinder().filterByName("multiFreeFormSupported").first()
+            .createHook {
+                returnConstant(true)
             }
     }
 }

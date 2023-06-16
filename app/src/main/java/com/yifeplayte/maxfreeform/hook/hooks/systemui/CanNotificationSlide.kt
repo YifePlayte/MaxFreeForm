@@ -9,7 +9,7 @@ object CanNotificationSlide : BaseHook() {
     override fun init() {
         loadClass("com.android.systemui.statusbar.notification.NotificationSettingsManager").methodFinder()
             .filterByName("canSlide").first().createHook {
-            returnConstant(true)
-        }
+                returnConstant(true)
+            }
     }
 }

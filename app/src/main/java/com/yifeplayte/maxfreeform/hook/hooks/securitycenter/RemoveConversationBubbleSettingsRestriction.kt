@@ -9,7 +9,7 @@ import com.github.kyuubiran.ezxhelper.ObjectHelper.Companion.objectHelper
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 
-object GetDefaultBubbles : BaseHook() {
+object RemoveConversationBubbleSettingsRestriction : BaseHook() {
     override fun init() {
         loadClass("com.miui.bubbles.settings.BubblesSettings").methodFinder().filterByName("getDefaultBubbles").first()
             .createHook {
@@ -22,10 +22,10 @@ object GetDefaultBubbles : BaseHook() {
                         loadClass("android.util.MiuiMultiWindowUtils"), "getFreeformSuggestionList", null, mContext
                     ) as List<*>
                     freeformSuggestionList.associateWith { pkg ->
-                        val bubbleApp = clazzBubbleApp.getConstructor(String::class.java, Int::class.java)
-                            .newInstance(pkg, mCurrentUserId)
-                        bubbleApp.objectHelper().invokeMethodBestMatch("setChecked", null, true)
-                        bubbleApp
+                        clazzBubbleApp.getConstructor(String::class.java, Int::class.java)
+                            .newInstance(pkg, mCurrentUserId).apply {
+                                objectHelper().invokeMethodBestMatch("setChecked", null, true)
+                            }
                     }.forEach { (pkg, bubbleApp) ->
                         arrayMap[pkg as String] = bubbleApp
                     }

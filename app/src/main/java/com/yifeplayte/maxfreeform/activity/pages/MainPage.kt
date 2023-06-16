@@ -18,101 +18,77 @@ class MainPage : BasePage() {
         TitleText(textId = R.string.maxfreeform_tips)
         TextSummaryWithSwitch(
             TextSummaryV(
-                textId = R.string.side_hide_freeform,
-                tipsId = R.string.side_hide_freeform_tips
-            ),
-            SwitchV("side_hide", true)
+                textId = R.string.side_hide_freeform, tipsId = R.string.side_hide_freeform_tips
+            ), SwitchV("unlock_side_hide_freeform")
         )
         TextSummaryWithSwitch(
             TextSummaryV(
                 textId = R.string.remove_conversation_bubble_settings_restriction,
                 tipsId = R.string.remove_conversation_bubble_settings_restriction_tips
-            ),
-            SwitchV("side_hide_notification", true)
+            ), SwitchV("remove_conversation_bubble_settings_restriction")
         )
         TextSummaryWithSwitch(
             TextSummaryV(
-                textId = R.string.can_notification_slide,
-                tipsId = R.string.can_notification_slide_tips
-            ),
-            SwitchV("can_notification_slide", true)
-        )
-        TextSummaryWithSwitch(
-            TextSummaryV(
-                textId = R.string.recents_to_small_freeform,
-                tipsId = R.string.recents_to_small_freeform_tips
-            ),
-            SwitchV("recents_to_small_freeform", false)
+                textId = R.string.can_notification_slide, tipsId = R.string.can_notification_slide_tips
+            ), SwitchV("can_notification_slide")
         )
         TextSummaryWithSwitch(
             TextSummaryV(
                 textId = R.string.remove_small_window_restrictions,
                 tipsId = R.string.remove_small_window_restrictions_tips
-            ),
-            SwitchV("remove_small_window_restrictions", true)
+            ), SwitchV("remove_small_window_restrictions")
         )
         TextSummaryWithSwitch(
             TextSummaryV(
                 textId = R.string.add_freeform_shortcut
-            ),
-            SwitchV("add_freeform_shortcut")
+            ), SwitchV("add_freeform_shortcut")
         )
         Line()
         TitleText(textId = R.string.more)
-        TextSummaryWithArrow(
-            TextSummaryV(
-                textId = R.string.try_to_fix_conversation_bubbles,
-                tipsId = R.string.try_to_fix_conversation_bubbles_tips
-            ) {
-                Terminal.exec("pm enable com.miui.securitycenter/com.miui.bubbles.services.BubblesNotificationListenerService")
-                Toast.makeText(
-                    activity,
-                    getString(R.string.finished),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        )
+        TextSummaryWithArrow(TextSummaryV(
+            textId = R.string.try_to_fix_conversation_bubbles,
+            tipsId = R.string.try_to_fix_conversation_bubbles_tips
+        ) {
+            Terminal.exec("pm enable com.miui.securitycenter/com.miui.bubbles.services.BubblesNotificationListenerService")
+            Toast.makeText(
+                activity, getString(R.string.finished), Toast.LENGTH_SHORT
+            ).show()
+        })
         Line()
         TitleText(textId = R.string.reboot)
-        TextSummaryWithArrow(
-            TextSummaryV(
-                textId = R.string.restart_all_scope
-            ) {
-                MIUIDialog(activity) {
-                    setTitle(R.string.warning)
-                    setMessage(R.string.restart_all_scope_tips)
-                    setLButton(R.string.cancel) {
-                        dismiss()
+        TextSummaryWithArrow(TextSummaryV(
+            textId = R.string.restart_all_scope
+        ) {
+            MIUIDialog(activity) {
+                setTitle(R.string.warning)
+                setMessage(R.string.restart_all_scope_tips)
+                setLButton(R.string.cancel) {
+                    dismiss()
+                }
+                setRButton(R.string.done) {
+                    PACKAGE_NAME_HOOKED.forEach {
+                        if (it != "android") Terminal.exec("killall $it")
                     }
-                    setRButton(R.string.done) {
-                        PACKAGE_NAME_HOOKED.forEach {
-                            if (it != "android") Terminal.exec("killall $it")
-                        }
-                        Toast.makeText(
-                            activity,
-                            getString(R.string.finished),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        dismiss()
-                    }
-                }.show()
-            }
-        )
-        TextSummaryWithArrow(
-            TextSummaryV(
-                textId = R.string.reboot_system
-            ) {
-                MIUIDialog(activity) {
-                    setTitle(R.string.warning)
-                    setMessage(R.string.reboot_tips)
-                    setLButton(R.string.cancel) {
-                        dismiss()
-                    }
-                    setRButton(R.string.done) {
-                        Terminal.exec("/system/bin/sync;/system/bin/svc power reboot || reboot")
-                    }
-                }.show()
-            }
-        )
+                    Toast.makeText(
+                        activity, getString(R.string.finished), Toast.LENGTH_SHORT
+                    ).show()
+                    dismiss()
+                }
+            }.show()
+        })
+        TextSummaryWithArrow(TextSummaryV(
+            textId = R.string.reboot_system
+        ) {
+            MIUIDialog(activity) {
+                setTitle(R.string.warning)
+                setMessage(R.string.reboot_tips)
+                setLButton(R.string.cancel) {
+                    dismiss()
+                }
+                setRButton(R.string.done) {
+                    Terminal.exec("/system/bin/sync;/system/bin/svc power reboot || reboot")
+                }
+            }.show()
+        })
     }
 }
