@@ -39,5 +39,15 @@ object UnlockEnterSmallWindow : BaseHook() {
                     }
                 }
             }
+        loadClass("android.util.MiuiMultiWindowUtils").methodFinder()
+            .filterByName("hasSmallFreeform").toList().createHooks {
+                before { param ->
+                    if (Throwable().stackTrace.any {
+                            it.className == "android.util.MiuiMultiWindowUtils" && it.methodName == "startSmallFreeform"
+                        }) {
+                        param.result = false
+                    }
+                }
+            }
     }
 }
