@@ -35,7 +35,7 @@ class MainHook : IXposedHookLoadPackage, IXposedHookZygoteInit {
             EzXHelper.setToastTag(TAG)
 
             // Init hooks
-            when (lpparam.packageName) {
+            when (EzXHelper.hostPackageName) {
                 "android" -> {
                     initHook(UnlockFreeformQuantityLimit)
                     initHook(UnlockSideHideFreeform, "unlock_side_hide_freeform")

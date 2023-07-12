@@ -50,10 +50,19 @@ object AddFreeformShortcut : BaseHook() {
     }
 
     private fun initForPad() {
+        val clazzShortcutInfo = loadClass("com.miui.home.launcher.ShortcutInfo")
         loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem\$MultipleSmallWindowShortcutMenuItem").methodFinder()
-            .filterByName("isValid").first().createHook { returnConstant(true) }
+            .filterByName("isValid").first().createHook {
+                before {
+                    it.result = it.args[0]::class.java.isAssignableFrom(clazzShortcutInfo)
+                }
+            }
         loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem\$SmallWindowShortcutMenuItem").methodFinder()
-            .filterByName("isValid").first().createHook { returnConstant(true) }
+            .filterByName("isValid").first().createHook {
+                before {
+                    it.result = it.args[0]::class.java.isAssignableFrom(clazzShortcutInfo)
+                }
+            }
     }
 
     @SuppressLint("DiscouragedApi")
