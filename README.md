@@ -19,3 +19,9 @@ Unlock multi freeform limits for MIUI 13 devices
 
 ### License
 [GNU General Public License v3.0](https://github.com/YifePlayte/MaxFreeForm/blob/main/LICENSE)
+
+---
+
+### 捐赠 / Sponsor
+
+[爱发电 / AFDIAN](https://afdian.net/a/YifePlayte)
