@@ -14,8 +14,8 @@ object UnlockFreeformQuantityLimit : BaseHook() {
         }.toList().createHooks {
             returnConstant(256)
         }
-        clazzMiuiFreeFormStackDisplayStrategy.methodFinder().filterByName("shouldStopStartFreeform").first()
-            .createHook {
+        clazzMiuiFreeFormStackDisplayStrategy.methodFinder().filterByName("shouldStopStartFreeform").firstOrNull()
+            ?.createHook {
                 returnConstant(false)
             }
     }

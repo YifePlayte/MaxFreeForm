@@ -11,6 +11,7 @@ import com.yifeplayte.maxfreeform.hook.hooks.home.AddFreeformShortcut
 import com.yifeplayte.maxfreeform.hook.hooks.home.UnlockEnterSmallWindow
 import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.RemoveConversationBubbleSettingsRestriction
 import com.yifeplayte.maxfreeform.hook.hooks.systemui.CanNotificationSlide
+import com.yifeplayte.maxfreeform.hook.hooks.systemui.RemoveConversationBubbleSettingsRestrictionUI
 import com.yifeplayte.maxfreeform.hook.utils.XSharedPreferences.getBoolean
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.IXposedHookZygoteInit
@@ -49,6 +50,10 @@ class MainHook : IXposedHookLoadPackage, IXposedHookZygoteInit {
 
                 "com.android.systemui" -> {
                     initHook(CanNotificationSlide, "can_notification_slide")
+                    initHook(
+                        RemoveConversationBubbleSettingsRestrictionUI,
+                        "remove_conversation_bubble_settings_restriction"
+                    )
                 }
 
                 "com.miui.securitycenter" -> {

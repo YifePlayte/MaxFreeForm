@@ -7,14 +7,14 @@ plugins {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.yifeplayte.maxfreeform"
         minSdk = 31
-        targetSdk = 33
         versionCode = 15
         versionName = "2.1.1"
+        targetSdk = 34
     }
 
     buildTypes {
@@ -54,7 +54,6 @@ android {
 
 dependencies {
     implementation(project(":blockmiui"))
-    implementation("com.github.kyuubiran:EzXHelper:2.0.5")
-    // implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
+    implementation("com.github.kyuubiran:EzXHelper:2.0.8")
     compileOnly("de.robv.android.xposed:api:82")
 }

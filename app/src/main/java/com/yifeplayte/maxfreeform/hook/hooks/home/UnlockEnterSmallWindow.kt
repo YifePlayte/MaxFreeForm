@@ -9,14 +9,19 @@ import com.github.kyuubiran.ezxhelper.ObjectHelper.Companion.objectHelper
 import com.github.kyuubiran.ezxhelper.ObjectUtils.getObjectOrNullAs
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
+import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 
 object UnlockEnterSmallWindow : BaseHook() {
     override fun init() {
-        val clazzRecentsAndFSGestureUtils = loadClass("com.miui.home.launcher.RecentsAndFSGestureUtils")
-        clazzRecentsAndFSGestureUtils.methodFinder().filterByName("canTaskEnterSmallWindow").toList().createHooks {
+        if (IS_HYPER_OS) return
+        val clazzRecentsAndFSGestureUtils =
+            loadClass("com.miui.home.launcher.RecentsAndFSGestureUtils")
+        clazzRecentsAndFSGestureUtils.methodFinder().filterByName("canTaskEnterSmallWindow")
+            .toList().createHooks {
             returnConstant(true)
         }
-        clazzRecentsAndFSGestureUtils.methodFinder().filterByName("canTaskEnterMiniSmallWindow").toList().createHooks {
+        clazzRecentsAndFSGestureUtils.methodFinder().filterByName("canTaskEnterMiniSmallWindow")
+            .toList().createHooks {
             before {
                 it.result = invokeStaticMethodBestMatch(
                     loadClass("com.miui.home.smallwindow.SmallWindowStateHelper"), "getInstance"
@@ -26,10 +31,14 @@ object UnlockEnterSmallWindow : BaseHook() {
         loadClass("com.miui.home.smallwindow.SmallWindowStateHelperUseManager").methodFinder()
             .filterByName("canEnterMiniSmallWindow").first().createHook {
                 before {
-                    it.result = getObjectOrNullAs<ArraySet<*>>(it.thisObject, "mMiniSmallWindowInfoSet")!!.isEmpty()
+                    it.result = getObjectOrNullAs<ArraySet<*>>(
+                        it.thisObject,
+                        "mMiniSmallWindowInfoSet"
+                    )!!.isEmpty()
                 }
             }
-        loadClass("miui.app.MiuiFreeFormManager").methodFinder().filterByName("getAllFreeFormStackInfosOnDisplay")
+        loadClass("miui.app.MiuiFreeFormManager").methodFinder()
+            .filterByName("getAllFreeFormStackInfosOnDisplay")
             .toList().createHooks {
                 before { param ->
                     if (Throwable().stackTrace.any {
