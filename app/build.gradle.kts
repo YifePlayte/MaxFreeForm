@@ -12,9 +12,9 @@ android {
     defaultConfig {
         applicationId = "com.yifeplayte.maxfreeform"
         minSdk = 31
-        versionCode = 15
-        versionName = "2.1.1"
         targetSdk = 34
+        versionCode = 16
+        versionName = "3.0.0"
     }
 
     buildTypes {
