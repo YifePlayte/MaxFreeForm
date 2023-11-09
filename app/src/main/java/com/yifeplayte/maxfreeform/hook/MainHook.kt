@@ -5,6 +5,7 @@ import com.github.kyuubiran.ezxhelper.Log
 import com.github.kyuubiran.ezxhelper.LogExtensions.logexIfThrow
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.hook.hooks.android.RemoveSmallWindowRestrictions
+import com.yifeplayte.maxfreeform.hook.hooks.android.UnlockForegroundPin
 import com.yifeplayte.maxfreeform.hook.hooks.android.UnlockFreeformQuantityLimit
 import com.yifeplayte.maxfreeform.hook.hooks.android.UnlockSideHideFreeform
 import com.yifeplayte.maxfreeform.hook.hooks.home.AddFreeformShortcut
@@ -41,6 +42,7 @@ class MainHook : IXposedHookLoadPackage, IXposedHookZygoteInit {
                     initHook(UnlockFreeformQuantityLimit)
                     initHook(UnlockSideHideFreeform, "unlock_side_hide_freeform")
                     initHook(RemoveSmallWindowRestrictions, "remove_small_window_restrictions")
+                    initHook(UnlockForegroundPin, "unlock_foreground_pin")
                 }
 
                 "com.miui.home" -> {

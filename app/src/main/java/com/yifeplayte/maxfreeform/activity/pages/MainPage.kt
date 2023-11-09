@@ -9,6 +9,7 @@ import cn.fkj233.ui.activity.view.TextSummaryV
 import cn.fkj233.ui.dialog.MIUIDialog
 import com.yifeplayte.maxfreeform.R
 import com.yifeplayte.maxfreeform.hook.PACKAGE_NAME_HOOKED
+import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 import com.yifeplayte.maxfreeform.utils.Terminal
 
 @SuppressLint("NonConstantResourceId")
@@ -16,11 +17,12 @@ import com.yifeplayte.maxfreeform.utils.Terminal
 class MainPage : BasePage() {
     override fun onCreate() {
         TitleText(textId = R.string.maxfreeform_tips)
-        TextSummaryWithSwitch(
-            TextSummaryV(
-                textId = R.string.side_hide_freeform, tipsId = R.string.side_hide_freeform_tips
-            ), SwitchV("unlock_side_hide_freeform")
-        )
+        if (!IS_HYPER_OS)
+            TextSummaryWithSwitch(
+                TextSummaryV(
+                    textId = R.string.side_hide_freeform, tipsId = R.string.side_hide_freeform_tips
+                ), SwitchV("unlock_side_hide_freeform")
+            )
         TextSummaryWithSwitch(
             TextSummaryV(
                 textId = R.string.remove_conversation_bubble_settings_restriction,
@@ -29,7 +31,8 @@ class MainPage : BasePage() {
         )
         TextSummaryWithSwitch(
             TextSummaryV(
-                textId = R.string.can_notification_slide, tipsId = R.string.can_notification_slide_tips
+                textId = R.string.can_notification_slide,
+                tipsId = R.string.can_notification_slide_tips
             ), SwitchV("can_notification_slide")
         )
         TextSummaryWithSwitch(
@@ -43,6 +46,12 @@ class MainPage : BasePage() {
                 textId = R.string.add_freeform_shortcut
             ), SwitchV("add_freeform_shortcut")
         )
+        if (IS_HYPER_OS)
+            TextSummaryWithSwitch(
+                TextSummaryV(
+                    textId = R.string.unlock_foreground_pin
+                ), SwitchV("unlock_foreground_pin")
+            )
         Line()
         TitleText(textId = R.string.more)
         TextSummaryWithArrow(TextSummaryV(
