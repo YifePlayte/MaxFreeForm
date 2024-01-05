@@ -46,12 +46,28 @@ class MainPage : BasePage() {
                 textId = R.string.add_freeform_shortcut
             ), SwitchV("add_freeform_shortcut")
         )
-        if (IS_HYPER_OS)
+        if (IS_HYPER_OS) {
             TextSummaryWithSwitch(
                 TextSummaryV(
                     textId = R.string.unlock_foreground_pin
                 ), SwitchV("unlock_foreground_pin")
             )
+            TextSummaryWithSwitch(
+                TextSummaryV(
+                    textId = R.string.hide_freeform_top_bar
+                ), SwitchV("hide_freeform_top_bar")
+            )
+            TextSummaryWithSwitch(
+                TextSummaryV(
+                    textId = R.string.remove_freeform_top_bar
+                ), SwitchV("remove_freeform_top_bar")
+            )
+            TextSummaryWithSwitch(
+                TextSummaryV(
+                    textId = R.string.remove_freeform_bottom_bar
+                ), SwitchV("remove_freeform_bottom_bar")
+            )
+        }
         Line()
         TitleText(textId = R.string.more)
         TextSummaryWithArrow(TextSummaryV(
