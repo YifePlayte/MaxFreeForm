@@ -25,7 +25,7 @@ object Terminal {
             val buffer = CharArray(4096)
             val output = StringBuilder()
             while (reader.read(buffer).also { read = it } > 0) {
-                output.append(buffer, 0, read)
+                output.appendRange(buffer, 0, read)
             }
             process.waitFor()
             output.toString()
