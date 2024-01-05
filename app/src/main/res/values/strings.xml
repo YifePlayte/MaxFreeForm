@@ -27,5 +27,5 @@
     <string name="try_to_fix_conversation_bubbles_tips">Try to re-enable conversation bubbles service</string>
     <string name="unlock_foreground_pin">Unlock foreground side-hide floating windows</string>
     <string name="warning">Warning</string>
-    <string name="xposed_description">Unlock multi freeform limits for MIUI 13 devices</string>
+    <string name="xposed_description">Unlock multi freeform limits for MIUI / HyperOS devices</string>
 </resources>

@@ -27,5 +27,5 @@
     <string name="try_to_fix_conversation_bubbles_tips">尝试重新启用气泡通知服务</string>
     <string name="unlock_foreground_pin">解锁前台贴边</string>
     <string name="warning">警告</string>
-    <string name="xposed_description">为各种MIUI13设备解除多小窗限制</string>
+    <string name="xposed_description">为各种 MIUI / HyperOS 设备解除多小窗限制</string>
 </resources>
