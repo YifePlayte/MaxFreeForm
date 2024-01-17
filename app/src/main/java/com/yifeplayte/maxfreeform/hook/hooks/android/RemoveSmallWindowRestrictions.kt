@@ -10,6 +10,13 @@ import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 object RemoveSmallWindowRestrictions : BaseHook() {
     override fun init() {
         runCatching {
+            loadClass("android.app.ActivityTaskManager").methodFinder()
+                .filterByName("supportsSplitScreen").toList().createHooks {
+                    returnConstant(true)
+                }
+        }
+
+        runCatching {
             loadClass("com.android.server.wm.ActivityTaskManagerService").methodFinder()
                 .filterByName("retrieveSettings").toList().createHooks {
                     after {

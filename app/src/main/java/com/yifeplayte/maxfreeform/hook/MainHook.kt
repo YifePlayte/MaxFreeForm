@@ -62,6 +62,7 @@ class MainHook : IXposedHookLoadPackage, IXposedHookZygoteInit {
                     initHook(HideFreeformTopBar, "hide_freeform_top_bar")
                     initHook(RemoveFreeformTopBar, "remove_freeform_top_bar")
                     initHook(RemoveFreeformBottomBar, "remove_freeform_bottom_bar")
+                    initHook(RemoveSmallWindowRestrictions, "remove_small_window_restrictions")
                 }
 
                 "com.miui.securitycenter" -> {
