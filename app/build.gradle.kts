@@ -9,6 +9,8 @@ plugins {
 android {
     compileSdk = 34
 
+    namespace = "com.yifeplayte.maxfreeform"
+
     defaultConfig {
         applicationId = "com.yifeplayte.maxfreeform"
         minSdk = 31
@@ -30,10 +32,12 @@ android {
     }
 
     androidResources {
-        additionalParameters("--allow-reserved-package-id", "--package-id", "0x45")
+        additionalParameters += "--allow-reserved-package-id"
+        additionalParameters += "--package-id"
+        additionalParameters += "0x45"
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/**"
             excludes += "/kotlin/**"
@@ -49,7 +53,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
-    namespace = "com.yifeplayte.maxfreeform"
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
