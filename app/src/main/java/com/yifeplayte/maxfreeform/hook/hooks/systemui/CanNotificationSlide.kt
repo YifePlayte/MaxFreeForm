@@ -20,7 +20,8 @@ object CanNotificationSlide : BaseHook() {
             .filterByName("updateMiniWindowBar").first().createHook {
                 before {
                     val miniWindowTargetPkg =
-                        invokeMethodBestMatch(it.thisObject, "getMiniWindowTargetPkg") as String
+                        invokeMethodBestMatch(it.thisObject, "getMiniWindowTargetPkg") as String?
+                            ?: return@before
                     val mAppMiniWindowManager =
                         invokeMethodBestMatch(it.thisObject, "getMAppMiniWindowManager")!!
                     val notificationSettingsManager = getObjectOrNull(
