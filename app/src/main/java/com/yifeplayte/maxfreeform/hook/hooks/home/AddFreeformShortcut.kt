@@ -37,7 +37,8 @@ object AddFreeformShortcut : BaseHook() {
                     param.result = 6
                 }
             }
-        loadClass("com.miui.home.launcher.shortcuts.ShortcutMenuItem").methodFinder().filterByName("getShortTitle")
+        loadClass("com.miui.home.launcher.shortcuts.ShortcutMenuItem").methodFinder()
+            .filterByName("getShortTitle")
             .toList().createHooks {
                 after { param ->
                     param.result = when (param.result) {
@@ -67,7 +68,8 @@ object AddFreeformShortcut : BaseHook() {
 
     @SuppressLint("DiscouragedApi")
     private fun initForPhone() {
-        val clazzSystemShortcutMenuItem = loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem")
+        val clazzSystemShortcutMenuItem =
+            loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem")
 
         Activity::class.java.methodFinder().filterByName("onCreate").toList().createHooks {
             after {
@@ -87,7 +89,10 @@ object AddFreeformShortcut : BaseHook() {
                 before { param ->
                     val shortTitle = invokeMethodBestMatch(param.thisObject, "getShortTitle")
                     when (shortTitle) {
-                        in setOf(moduleRes.getString(R.string.freeform), moduleRes.getString(R.string.new_task)) -> {
+                        in setOf(
+                            moduleRes.getString(R.string.freeform),
+                            moduleRes.getString(R.string.new_task)
+                        ) -> {
                             param.result = OnClickListener { view ->
                                 val context = view.context
                                 val componentName = invokeMethodBestMatch(
@@ -108,42 +113,70 @@ object AddFreeformShortcut : BaseHook() {
                                     context,
                                     componentName.packageName
                                 )?.let {
-                                    context.startActivity(intent, (it as ActivityOptions).toBundle())
+                                    context.startActivity(
+                                        intent,
+                                        (it as ActivityOptions).toBundle()
+                                    )
                                 }
                             }
                         }
                     }
                 }
             }
-        clazzSystemShortcutMenuItem.methodFinder().filterByName("createAllSystemShortcutMenuItems").toList()
+        clazzSystemShortcutMenuItem.methodFinder().filterByName("createAllSystemShortcutMenuItems")
+            .toList()
             .createHooks {
                 after {
                     val mAllSystemShortcutMenuItems = getStaticObjectOrNullAs<List<Any>>(
                         clazzSystemShortcutMenuItem, "sAllSystemShortcutMenuItems"
                     )!!
                     val mSmallWindowInstance =
-                        loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem\$AppDetailsShortcutMenuItem").newInstance()
+                        loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem\$AppDetailsShortcutMenuItem").getConstructor()
+                            .newInstance()
                             .apply {
                                 invokeMethodBestMatch(
-                                    this, "setShortTitle", null, moduleRes.getString(R.string.freeform)
+                                    this,
+                                    "setShortTitle",
+                                    null,
+                                    moduleRes.getString(R.string.freeform)
                                 )
-                                invokeMethodBestMatch(this, "setIconDrawable", null, appContext.let {
-                                    it.getDrawable(
-                                        it.resources.getIdentifier("ic_task_small_window", "drawable", hostPackageName)
-                                    )
-                                })
+                                invokeMethodBestMatch(
+                                    this,
+                                    "setIconDrawable",
+                                    null,
+                                    appContext.let {
+                                        it.getDrawable(
+                                            it.resources.getIdentifier(
+                                                "ic_task_small_window",
+                                                "drawable",
+                                                hostPackageName
+                                            )
+                                        )
+                                    })
                             }
                     val mNewTaskInstance =
-                        loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem\$AppDetailsShortcutMenuItem").newInstance()
+                        loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem\$AppDetailsShortcutMenuItem").getConstructor()
+                            .newInstance()
                             .apply {
                                 invokeMethodBestMatch(
-                                    this, "setShortTitle", null, moduleRes.getString(R.string.new_task)
+                                    this,
+                                    "setShortTitle",
+                                    null,
+                                    moduleRes.getString(R.string.new_task)
                                 )
-                                invokeMethodBestMatch(this, "setIconDrawable", null, appContext.let {
-                                    it.getDrawable(
-                                        it.resources.getIdentifier("ic_task_add_pair", "drawable", hostPackageName)
-                                    )
-                                })
+                                invokeMethodBestMatch(
+                                    this,
+                                    "setIconDrawable",
+                                    null,
+                                    appContext.let {
+                                        it.getDrawable(
+                                            it.resources.getIdentifier(
+                                                "ic_task_add_pair",
+                                                "drawable",
+                                                hostPackageName
+                                            )
+                                        )
+                                    })
                             }
                     val sAllSystemShortcutMenuItems = ArrayList<Any>().apply {
                         add(mSmallWindowInstance)
@@ -151,7 +184,9 @@ object AddFreeformShortcut : BaseHook() {
                         addAll(mAllSystemShortcutMenuItems)
                     }
                     setStaticObject(
-                        clazzSystemShortcutMenuItem, "sAllSystemShortcutMenuItems", sAllSystemShortcutMenuItems
+                        clazzSystemShortcutMenuItem,
+                        "sAllSystemShortcutMenuItems",
+                        sAllSystemShortcutMenuItems
                     )
                 }
             }
