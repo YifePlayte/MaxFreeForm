@@ -43,10 +43,17 @@ class MainPage : BasePage() {
         )
         TextSummaryWithSwitch(
             TextSummaryV(
-                textId = R.string.add_freeform_shortcut
+                textId = R.string.add_freeform_shortcut,
+                tipsId = R.string.add_freeform_shortcut_tips
             ), SwitchV("add_freeform_shortcut")
         )
         if (IS_HYPER_OS) {
+            TextSummaryWithSwitch(
+                TextSummaryV(
+                    textId = R.string.unlock_multiple_task,
+                    tipsId = R.string.unlock_multiple_task_tips
+                ), SwitchV("unlock_multiple_task")
+            )
             TextSummaryWithSwitch(
                 TextSummaryV(
                     textId = R.string.unlock_foreground_pin

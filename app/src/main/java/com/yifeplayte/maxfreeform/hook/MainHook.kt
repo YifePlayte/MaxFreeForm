@@ -16,6 +16,7 @@ import com.yifeplayte.maxfreeform.hook.hooks.systemui.HideFreeformTopBar
 import com.yifeplayte.maxfreeform.hook.hooks.systemui.RemoveConversationBubbleSettingsRestrictionUI
 import com.yifeplayte.maxfreeform.hook.hooks.systemui.RemoveFreeformBottomBar
 import com.yifeplayte.maxfreeform.hook.hooks.systemui.RemoveFreeformTopBar
+import com.yifeplayte.maxfreeform.hook.hooks.systemui.UnlockMultipleTask
 import com.yifeplayte.maxfreeform.hook.utils.XSharedPreferences.getBoolean
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.IXposedHookZygoteInit
@@ -63,6 +64,7 @@ class MainHook : IXposedHookLoadPackage, IXposedHookZygoteInit {
                     initHook(RemoveFreeformTopBar, "remove_freeform_top_bar")
                     initHook(RemoveFreeformBottomBar, "remove_freeform_bottom_bar")
                     initHook(RemoveSmallWindowRestrictions, "remove_small_window_restrictions")
+                    initHook(UnlockMultipleTask, "unlock_multiple_task")
                 }
 
                 "com.miui.securitycenter" -> {

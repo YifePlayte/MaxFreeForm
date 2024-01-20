@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_freeform_shortcut">快捷菜单添加小窗与多开小窗</string>
+    <string name="add_freeform_shortcut_tips">在桌面快捷菜单里</string>
     <string name="can_notification_slide">允许大多数应用通知下拉展开小窗</string>
     <string name="can_notification_slide_tips">一些通过Mi Push推送的通知可能不受支持</string>
     <string name="cancel">取消</string>
@@ -29,6 +30,8 @@
     <string name="try_to_fix_conversation_bubbles">尝试修复气泡通知</string>
     <string name="try_to_fix_conversation_bubbles_tips">尝试重新启用气泡通知服务</string>
     <string name="unlock_foreground_pin">解锁前台贴边</string>
+    <string name="unlock_multiple_task">解锁单应用多任务小窗按钮</string>
+    <string name="unlock_multiple_task_tips">在小窗顶栏里</string>
     <string name="warning">警告</string>
     <string name="xposed_description">为各种 MIUI / HyperOS 设备解除多小窗限制</string>
 </resources>
