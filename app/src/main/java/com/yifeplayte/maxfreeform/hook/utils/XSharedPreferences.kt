@@ -20,7 +20,7 @@ object XSharedPreferences {
         return prefs.getString(key, defValue) ?: defValue
     }
 
-    fun getStringSet(key: String, defValue: MutableSet<String>): MutableSet<String> {
+    fun getStringSet(key: String, defValue: Set<String>): Set<String> {
         val prefs = XSharedPreferences(BuildConfig.APPLICATION_ID, "config")
         if (prefs.hasFileChanged()) {
             prefs.reload()

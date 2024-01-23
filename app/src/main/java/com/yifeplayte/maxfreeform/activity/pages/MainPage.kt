@@ -1,7 +1,9 @@
 package com.yifeplayte.maxfreeform.activity.pages
 
 import android.annotation.SuppressLint
+import android.view.View
 import android.widget.Toast
+import cn.fkj233.ui.activity.MIUIActivity
 import cn.fkj233.ui.activity.annotation.BMMainPage
 import cn.fkj233.ui.activity.data.BasePage
 import cn.fkj233.ui.activity.view.SwitchV
@@ -17,12 +19,12 @@ import com.yifeplayte.maxfreeform.utils.Terminal
 class MainPage : BasePage() {
     override fun onCreate() {
         TitleText(textId = R.string.maxfreeform_tips)
-        if (!IS_HYPER_OS)
-            TextSummaryWithSwitch(
-                TextSummaryV(
-                    textId = R.string.side_hide_freeform, tipsId = R.string.side_hide_freeform_tips
-                ), SwitchV("unlock_side_hide_freeform")
-            )
+        if (!IS_HYPER_OS) TextSummaryWithSwitch(
+            TextSummaryV(
+                textId = R.string.side_hide_freeform,
+                tipsId = R.string.side_hide_freeform_tips
+            ), SwitchV("unlock_side_hide_freeform")
+        )
         TextSummaryWithSwitch(
             TextSummaryV(
                 textId = R.string.remove_conversation_bubble_settings_restriction,
@@ -54,10 +56,28 @@ class MainPage : BasePage() {
                     tipsId = R.string.unlock_multiple_task_tips
                 ), SwitchV("unlock_multiple_task")
             )
+            val bindingUnlockForegroundPin = GetDataBinding({
+                MIUIActivity.safeSP.getBoolean("unlock_foreground_pin", false)
+            }) { view, flags, data ->
+                when (flags) {
+                    1 -> view.visibility = if (data as Boolean) View.VISIBLE else View.GONE
+                }
+            }
             TextSummaryWithSwitch(
                 TextSummaryV(
                     textId = R.string.unlock_foreground_pin
-                ), SwitchV("unlock_foreground_pin")
+                ), SwitchV(
+                    "unlock_foreground_pin",
+                    dataBindingSend = bindingUnlockForegroundPin.bindingSend
+                )
+            )
+            TextSummaryWithArrow(
+                TextSummaryV(
+                    textId = R.string.unlock_foreground_pin_whitelist
+                ) {
+                    showFragment("UnlockForegroundPinWhitelistPage")
+                },
+                dataBindingRecv = bindingUnlockForegroundPin.getRecv(1)
             )
             TextSummaryWithSwitch(
                 TextSummaryV(
