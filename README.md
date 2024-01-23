@@ -7,13 +7,21 @@ Unlock multi freeform limits for MIUI / HyperOS devices
 
 ---
 
-### 第三方开源引用
+### 第三方开源引用 / Third-party open source references
+
 ##### GNU Lesser General Public License v2.1
+
 [577fkj/blockmiui](https://github.com/577fkj/blockmiui)  
+
 ##### Apache License 2.0
+
 [KyuubiRan/EzXHelper](https://github.com/KyuubiRan/EzXHelper)  
+
 ##### GNU General Public License v3.0
+
 [Simplicity-Team/WooBoxForMIUI](https://github.com/Simplicity-Team/WooBoxForMIUI)
+
+[ranLee1/jpinyin](https://github.com/ranLee1/jpinyin)
 
 ---
 
