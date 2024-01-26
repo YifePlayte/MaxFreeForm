@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -17,6 +18,15 @@ android {
         targetSdk = 34
         versionCode = 21
         versionName = "3.2.3"
+
+        applicationVariants.configureEach {
+            outputs.configureEach {
+                if (this is BaseVariantOutputImpl) {
+                    outputFileName = outputFileName.replace("app", rootProject.name)
+                        .replace(Regex("debug|release"), versionName)
+                }
+            }
+        }
     }
 
     buildTypes {
@@ -26,8 +36,8 @@ android {
             proguardFiles("proguard-rules.pro")
         }
         named("debug") {
-            versionNameSuffix = "-debug-" +
-                    DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now())
+            versionNameSuffix = "-debug-" + DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+                .format(LocalDateTime.now())
         }
     }
 
