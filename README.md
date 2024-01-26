@@ -21,6 +21,8 @@ Unlock multi freeform limits for MIUI / HyperOS devices
 
 [Simplicity-Team/WooBoxForMIUI](https://github.com/Simplicity-Team/WooBoxForMIUI)
 
+[HChenX/ForegroundPin](https://github.com/HChenX/ForegroundPin)
+
 [ranLee1/jpinyin](https://github.com/ranLee1/jpinyin)
 
 ---

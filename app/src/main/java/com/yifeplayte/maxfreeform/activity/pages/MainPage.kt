@@ -49,28 +49,22 @@ class MainPage : BasePage() {
                 tipsId = R.string.add_freeform_shortcut_tips
             ), SwitchV("add_freeform_shortcut")
         )
-        if (IS_HYPER_OS) {
-            TextSummaryWithSwitch(
-                TextSummaryV(
-                    textId = R.string.unlock_multiple_task,
-                    tipsId = R.string.unlock_multiple_task_tips
-                ), SwitchV("unlock_multiple_task")
-            )
-            val bindingUnlockForegroundPin = GetDataBinding({
-                MIUIActivity.safeSP.getBoolean("unlock_foreground_pin", false)
-            }) { view, flags, data ->
-                when (flags) {
-                    1 -> view.visibility = if (data as Boolean) View.VISIBLE else View.GONE
-                }
+        val bindingUnlockForegroundPin = GetDataBinding({
+            MIUIActivity.safeSP.getBoolean("unlock_foreground_pin", false)
+        }) { view, flags, data ->
+            when (flags) {
+                1 -> view.visibility = if (data as Boolean) View.VISIBLE else View.GONE
             }
-            TextSummaryWithSwitch(
-                TextSummaryV(
-                    textId = R.string.unlock_foreground_pin
-                ), SwitchV(
-                    "unlock_foreground_pin",
-                    dataBindingSend = bindingUnlockForegroundPin.bindingSend
-                )
+        }
+        TextSummaryWithSwitch(
+            TextSummaryV(
+                textId = R.string.unlock_foreground_pin
+            ), SwitchV(
+                "unlock_foreground_pin",
+                dataBindingSend = bindingUnlockForegroundPin.bindingSend
             )
+        )
+        if (IS_HYPER_OS) {
             TextSummaryWithArrow(
                 TextSummaryV(
                     textId = R.string.unlock_foreground_pin_whitelist
@@ -78,6 +72,12 @@ class MainPage : BasePage() {
                     showFragment("UnlockForegroundPinWhitelistPage")
                 },
                 dataBindingRecv = bindingUnlockForegroundPin.getRecv(1)
+            )
+            TextSummaryWithSwitch(
+                TextSummaryV(
+                    textId = R.string.unlock_multiple_task,
+                    tipsId = R.string.unlock_multiple_task_tips
+                ), SwitchV("unlock_multiple_task")
             )
             TextSummaryWithSwitch(
                 TextSummaryV(
