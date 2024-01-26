@@ -8,6 +8,7 @@ import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
 import com.github.kyuubiran.ezxhelper.ObjectHelper.Companion.objectHelper
 import com.github.kyuubiran.ezxhelper.ObjectUtils.getObjectOrNull
 import com.github.kyuubiran.ezxhelper.ObjectUtils.getObjectOrNullAs
+import com.github.kyuubiran.ezxhelper.ObjectUtils.getObjectOrNullUntilSuperclassAs
 import com.github.kyuubiran.ezxhelper.ObjectUtils.invokeMethodBestMatch
 import com.github.kyuubiran.ezxhelper.ObjectUtils.setObject
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
@@ -34,7 +35,7 @@ object UnlockForegroundPin : BaseHook() {
                 before { param ->
                     val stack = param.args[0] ?: return@before
                     val mTask = getObjectOrNull(stack, "mTask") ?: return@before
-                    val surfaceControl = getObjectOrNullAs<SurfaceControl>(mTask, "mSurfaceControl")
+                    val surfaceControl = getObjectOrNullUntilSuperclassAs<SurfaceControl>(mTask, "mSurfaceControl")
                     if (surfaceControl?.isValid == true) {
                         val transaction = SurfaceControl.Transaction()
                         invokeMethodBestMatch(transaction, "hide", null, surfaceControl)
@@ -55,14 +56,14 @@ object UnlockForegroundPin : BaseHook() {
                     val thisObject = param.thisObject
                     val taskId = invokeMethodBestMatch(thisObject, "getRootTaskId") as Int
                     val inPinMode =
-                        thisObject.objectHelper().getObjectOrNull("mWmService")?.objectHelper()
+                        thisObject.objectHelper().getObjectOrNullUntilSuperclass("mWmService")?.objectHelper()
                             ?.getObjectOrNull("mAtmService")?.objectHelper()
                             ?.getObjectOrNull("mMiuiFreeFormManagerService")?.objectHelper()
                             ?.invokeMethodBestMatch("getMiuiFreeFormActivityStack", null, taskId)
                             ?.objectHelper()?.invokeMethodBestMatch("inPinMode") as Boolean?
                             ?: return@after
                     val mSurfaceControl =
-                        getObjectOrNullAs<SurfaceControl>(thisObject, "mSurfaceControl")
+                        getObjectOrNullUntilSuperclassAs<SurfaceControl>(thisObject, "mSurfaceControl")
                             ?: return@after
                     val transaction = invokeMethodBestMatch(
                         thisObject, "getSyncTransaction"
