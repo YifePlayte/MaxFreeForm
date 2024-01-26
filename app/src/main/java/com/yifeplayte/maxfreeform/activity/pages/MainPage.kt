@@ -13,6 +13,7 @@ import com.yifeplayte.maxfreeform.R
 import com.yifeplayte.maxfreeform.hook.PACKAGE_NAME_HOOKED
 import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 import com.yifeplayte.maxfreeform.utils.Terminal
+import kotlin.system.exitProcess
 
 @SuppressLint("NonConstantResourceId")
 @BMMainPage(titleId = R.string.app_name)
@@ -105,6 +106,24 @@ class MainPage : BasePage() {
             Toast.makeText(
                 activity, getString(R.string.finished), Toast.LENGTH_SHORT
             ).show()
+        })
+        TextSummaryWithArrow(TextSummaryV(
+            textId = R.string.reset_configuration
+        ) {
+            MIUIDialog(activity) {
+                setTitle(R.string.warning)
+                setMessage(R.string.reset_configuration_tips)
+                setLButton(R.string.cancel) {
+                    dismiss()
+                }
+                setRButton(R.string.done) {
+                    MIUIActivity.safeSP.mSP?.edit()?.clear()?.apply()
+                    Toast.makeText(
+                        activity, getString(R.string.finished), Toast.LENGTH_SHORT
+                    ).show()
+                    exitProcess(0)
+                }
+            }.show()
         })
         Line()
         TitleText(textId = R.string.reboot)
