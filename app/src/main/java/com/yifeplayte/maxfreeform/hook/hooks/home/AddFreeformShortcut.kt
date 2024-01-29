@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.ComponentName
 import android.content.Intent
+import android.os.UserHandle
 import android.view.View.OnClickListener
 import com.github.kyuubiran.ezxhelper.ClassUtils.getStaticObjectOrNullAs
 import com.github.kyuubiran.ezxhelper.ClassUtils.invokeStaticMethodBestMatch
@@ -23,6 +24,7 @@ import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.utils.Build.IS_TABLET
 
 object AddFreeformShortcut : BaseHook() {
+    private val clazzLauncherUtils by lazy { loadClass("com.miui.launcher.utils.LauncherUtils") }
     override fun init() {
         if (IS_TABLET) initForPad() else initForPhone()
         loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenu").methodFinder()
@@ -38,8 +40,7 @@ object AddFreeformShortcut : BaseHook() {
                 }
             }
         loadClass("com.miui.home.launcher.shortcuts.ShortcutMenuItem").methodFinder()
-            .filterByName("getShortTitle")
-            .toList().createHooks {
+            .filterByName("getShortTitle").toList().createHooks {
                 after { param ->
                     param.result = when (param.result) {
                         "应用信息" -> "信息"
@@ -98,6 +99,9 @@ object AddFreeformShortcut : BaseHook() {
                                 val componentName = invokeMethodBestMatch(
                                     param.thisObject, "getComponentName"
                                 ) as ComponentName
+                                val userHandle = invokeMethodBestMatch(
+                                    param.thisObject, "getUserHandle"
+                                ) as UserHandle
                                 val intent = Intent().apply {
                                     action = "android.intent.action.MAIN"
                                     component = componentName
@@ -113,9 +117,14 @@ object AddFreeformShortcut : BaseHook() {
                                     context,
                                     componentName.packageName
                                 )?.let {
-                                    context.startActivity(
+                                    invokeStaticMethodBestMatch(
+                                        clazzLauncherUtils,
+                                        "startActivityAsUser",
+                                        null,
+                                        context,
                                         intent,
-                                        (it as ActivityOptions).toBundle()
+                                        (it as ActivityOptions).toBundle(),
+                                        userHandle
                                     )
                                 }
                             }
@@ -124,56 +133,47 @@ object AddFreeformShortcut : BaseHook() {
                 }
             }
         clazzSystemShortcutMenuItem.methodFinder().filterByName("createAllSystemShortcutMenuItems")
-            .toList()
-            .createHooks {
+            .toList().createHooks {
                 after {
                     val mAllSystemShortcutMenuItems = getStaticObjectOrNullAs<List<Any>>(
                         clazzSystemShortcutMenuItem, "sAllSystemShortcutMenuItems"
                     )!!
                     val mSmallWindowInstance =
                         loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem\$AppDetailsShortcutMenuItem").getConstructor()
-                            .newInstance()
-                            .apply {
+                            .newInstance().apply {
                                 invokeMethodBestMatch(
                                     this,
                                     "setShortTitle",
                                     null,
                                     moduleRes.getString(R.string.freeform)
                                 )
-                                invokeMethodBestMatch(
-                                    this,
+                                invokeMethodBestMatch(this,
                                     "setIconDrawable",
                                     null,
                                     appContext.let {
                                         it.getDrawable(
                                             it.resources.getIdentifier(
-                                                "ic_task_small_window",
-                                                "drawable",
-                                                hostPackageName
+                                                "ic_task_small_window", "drawable", hostPackageName
                                             )
                                         )
                                     })
                             }
                     val mNewTaskInstance =
                         loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem\$AppDetailsShortcutMenuItem").getConstructor()
-                            .newInstance()
-                            .apply {
+                            .newInstance().apply {
                                 invokeMethodBestMatch(
                                     this,
                                     "setShortTitle",
                                     null,
                                     moduleRes.getString(R.string.new_task)
                                 )
-                                invokeMethodBestMatch(
-                                    this,
+                                invokeMethodBestMatch(this,
                                     "setIconDrawable",
                                     null,
                                     appContext.let {
                                         it.getDrawable(
                                             it.resources.getIdentifier(
-                                                "ic_task_add_pair",
-                                                "drawable",
-                                                hostPackageName
+                                                "ic_task_add_pair", "drawable", hostPackageName
                                             )
                                         )
                                     })
