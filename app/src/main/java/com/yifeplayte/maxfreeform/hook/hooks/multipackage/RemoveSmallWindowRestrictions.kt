@@ -1,14 +1,20 @@
-package com.yifeplayte.maxfreeform.hook.hooks.android
+package com.yifeplayte.maxfreeform.hook.hooks.multipackage
 
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
 import com.github.kyuubiran.ezxhelper.ObjectHelper.Companion.objectHelper
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
-import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
+import com.yifeplayte.maxfreeform.hook.hooks.BaseMultiHook
 
-object RemoveSmallWindowRestrictions : BaseHook() {
-    override fun init() {
+object RemoveSmallWindowRestrictions : BaseMultiHook() {
+    override val key = "remove_small_window_restrictions"
+    override val hooks = mapOf(
+        "android" to { hook() },
+        "com.android.systemui" to { hook() },
+    )
+
+    private fun hook() {
         runCatching {
             loadClass("android.app.ActivityTaskManager").methodFinder()
                 .filterByName("supportsSplitScreen").toList().createHooks {

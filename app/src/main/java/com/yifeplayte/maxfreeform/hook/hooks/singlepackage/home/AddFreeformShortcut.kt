@@ -1,4 +1,4 @@
-package com.yifeplayte.maxfreeform.hook.hooks.home
+package com.yifeplayte.maxfreeform.hook.hooks.singlepackage.home
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -24,8 +24,9 @@ import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.utils.Build.IS_TABLET
 
 object AddFreeformShortcut : BaseHook() {
+    override val key = "add_freeform_shortcut"
     private val clazzLauncherUtils by lazy { loadClass("com.miui.launcher.utils.LauncherUtils") }
-    override fun init() {
+    override fun hook() {
         if (IS_TABLET) initForPad() else initForPhone()
         loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenu").methodFinder()
             .filterByName("getMaxShortcutItemCount").toList().createHooks {
@@ -88,8 +89,8 @@ object AddFreeformShortcut : BaseHook() {
         loadClass("com.miui.home.launcher.shortcuts.SystemShortcutMenuItem\$AppDetailsShortcutMenuItem").methodFinder()
             .filterByName("getOnClickListener").toList().createHooks {
                 before { param ->
-                    val shortTitle = invokeMethodBestMatch(param.thisObject, "getShortTitle")
-                    when (shortTitle) {
+                    when (val shortTitle =
+                        invokeMethodBestMatch(param.thisObject, "getShortTitle")) {
                         in setOf(
                             moduleRes.getString(R.string.freeform),
                             moduleRes.getString(R.string.new_task)
@@ -147,7 +148,8 @@ object AddFreeformShortcut : BaseHook() {
                                     null,
                                     moduleRes.getString(R.string.freeform)
                                 )
-                                invokeMethodBestMatch(this,
+                                invokeMethodBestMatch(
+                                    this,
                                     "setIconDrawable",
                                     null,
                                     appContext.let {
@@ -167,7 +169,8 @@ object AddFreeformShortcut : BaseHook() {
                                     null,
                                     moduleRes.getString(R.string.new_task)
                                 )
-                                invokeMethodBestMatch(this,
+                                invokeMethodBestMatch(
+                                    this,
                                     "setIconDrawable",
                                     null,
                                     appContext.let {

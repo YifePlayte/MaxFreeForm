@@ -1,4 +1,4 @@
-package com.yifeplayte.maxfreeform.hook.hooks.systemui
+package com.yifeplayte.maxfreeform.hook.hooks.singlepackage.systemui
 
 import com.github.kyuubiran.ezxhelper.ClassUtils
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
@@ -7,8 +7,9 @@ import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 
 object UnlockMultipleTask : BaseHook() {
-    override fun init() {
-        if (!IS_HYPER_OS) return
+    override val key = "unlock_multiple_task"
+    override val isEnabled get() = IS_HYPER_OS and super.isEnabled
+    override fun hook() {
         runCatching {
             ClassUtils.loadClass("android.app.ActivityTaskManager").methodFinder()
                 .filterByName("supportMultipleTask").toList().createHooks {

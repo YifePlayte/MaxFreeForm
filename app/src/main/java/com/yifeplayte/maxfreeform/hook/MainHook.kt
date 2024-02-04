@@ -1,95 +1,56 @@
 package com.yifeplayte.maxfreeform.hook
 
 import com.github.kyuubiran.ezxhelper.EzXHelper
-import com.github.kyuubiran.ezxhelper.Log
-import com.github.kyuubiran.ezxhelper.LogExtensions.logexIfThrow
-import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
-import com.yifeplayte.maxfreeform.hook.hooks.android.RemoveSmallWindowRestrictions
-import com.yifeplayte.maxfreeform.hook.hooks.android.UnlockForegroundPin
-import com.yifeplayte.maxfreeform.hook.hooks.android.UnlockFreeformQuantityLimit
-import com.yifeplayte.maxfreeform.hook.hooks.android.UnlockSideHideFreeform
-import com.yifeplayte.maxfreeform.hook.hooks.home.AddFreeformShortcut
-import com.yifeplayte.maxfreeform.hook.hooks.home.UnlockEnterSmallWindow
-import com.yifeplayte.maxfreeform.hook.hooks.securitycenter.RemoveConversationBubbleSettingsRestriction
-import com.yifeplayte.maxfreeform.hook.hooks.systemui.CanNotificationSlide
-import com.yifeplayte.maxfreeform.hook.hooks.systemui.HideFreeformTopBar
-import com.yifeplayte.maxfreeform.hook.hooks.systemui.RemoveConversationBubbleSettingsRestrictionUI
-import com.yifeplayte.maxfreeform.hook.hooks.systemui.RemoveFreeformBottomBar
-import com.yifeplayte.maxfreeform.hook.hooks.systemui.RemoveFreeformTopBar
-import com.yifeplayte.maxfreeform.hook.hooks.systemui.UnlockMultipleTask
-import com.yifeplayte.maxfreeform.hook.utils.XSharedPreferences.getBoolean
+import com.yifeplayte.maxfreeform.hook.hooks.multipackage.RemoveConversationBubbleSettingsRestriction
+import com.yifeplayte.maxfreeform.hook.hooks.multipackage.RemoveSmallWindowRestrictions
+import com.yifeplayte.maxfreeform.hook.hooks.singlepackage.Android
+import com.yifeplayte.maxfreeform.hook.hooks.singlepackage.Home
+import com.yifeplayte.maxfreeform.hook.hooks.singlepackage.SystemUI
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.IXposedHookZygoteInit
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 private const val TAG = "MaxFreeForm"
-val PACKAGE_NAME_HOOKED = setOf(
-    "android",
-    "com.miui.home",
-    "com.android.systemui",
-    "com.miui.securitycenter",
+private val singlePackagesHooked = setOf(
+    Android,
+    Home,
+    SystemUI,
 )
+private val multiPackagesHooked = setOf(
+    RemoveConversationBubbleSettingsRestriction,
+    RemoveSmallWindowRestrictions,
+)
+val PACKAGE_NAME_HOOKED: Set<String>
+    get() {
+        val packageNameHooked = mutableSetOf<String>()
+        singlePackagesHooked.forEach { packageNameHooked.add(it.packageName) }
+        multiPackagesHooked.forEach { packageNameHooked.addAll(it.hooks.keys) }
+        return packageNameHooked
+    }
 
 @Suppress("unused")
 class MainHook : IXposedHookLoadPackage, IXposedHookZygoteInit {
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
-        if (lpparam.packageName in PACKAGE_NAME_HOOKED) {
 
-            // Init EzXHelper
+        // init EzXHelper
+        if (lpparam.isFirstApplication) {
             EzXHelper.initHandleLoadPackage(lpparam)
             EzXHelper.setLogTag(TAG)
             EzXHelper.setToastTag(TAG)
-
-            // Init hooks
-            when (EzXHelper.hostPackageName) {
-                "android" -> {
-                    initHook(UnlockFreeformQuantityLimit)
-                    initHook(UnlockSideHideFreeform, "unlock_side_hide_freeform")
-                    initHook(RemoveSmallWindowRestrictions, "remove_small_window_restrictions")
-                    initHook(UnlockForegroundPin, "unlock_foreground_pin")
-                }
-
-                "com.miui.home" -> {
-                    initHook(UnlockEnterSmallWindow)
-                    initHook(AddFreeformShortcut, "add_freeform_shortcut")
-                }
-
-                "com.android.systemui" -> {
-                    initHook(CanNotificationSlide, "can_notification_slide")
-                    initHook(
-                        RemoveConversationBubbleSettingsRestrictionUI,
-                        "remove_conversation_bubble_settings_restriction"
-                    )
-                    initHook(HideFreeformTopBar, "hide_freeform_top_bar")
-                    initHook(RemoveFreeformTopBar, "remove_freeform_top_bar")
-                    initHook(RemoveFreeformBottomBar, "remove_freeform_bottom_bar")
-                    initHook(RemoveSmallWindowRestrictions, "remove_small_window_restrictions")
-                    initHook(UnlockMultipleTask, "unlock_multiple_task")
-                }
-
-                "com.miui.securitycenter" -> {
-                    initHook(
-                        RemoveConversationBubbleSettingsRestriction,
-                        "remove_conversation_bubble_settings_restriction"
-                    )
-                }
-            }
         }
+
+        // single package
+        singlePackagesHooked.forEach { it.init() }
+
+        // multiple package
+        multiPackagesHooked.forEach { it.init() }
     }
 
     override fun initZygote(startupParam: IXposedHookZygoteInit.StartupParam) {
+
+        // init EzXHelper
         EzXHelper.initZygote(startupParam)
-    }
-
-    private fun initHook(hook: BaseHook, key: String, defValue: Boolean = false) =
-        initHook(hook, getBoolean(key, defValue))
-
-    private fun initHook(hook: BaseHook, enable: Boolean = true) {
-        if (enable) runCatching {
-            if (hook.isInit) return
-            hook.init()
-            hook.isInit = true
-            Log.ix("Inited hook: ${hook.javaClass.simpleName}")
-        }.logexIfThrow("Failed init hook: ${hook.javaClass.simpleName}")
+        EzXHelper.setLogTag(TAG)
+        EzXHelper.setToastTag(TAG)
     }
 }

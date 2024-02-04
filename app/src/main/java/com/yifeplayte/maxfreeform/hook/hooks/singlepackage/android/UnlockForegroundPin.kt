@@ -1,4 +1,4 @@
-package com.yifeplayte.maxfreeform.hook.hooks.android
+package com.yifeplayte.maxfreeform.hook.hooks.singlepackage.android
 
 import android.util.Log
 import android.view.SurfaceControl
@@ -19,7 +19,8 @@ import de.robv.android.xposed.XposedHelpers.getAdditionalInstanceField
 import de.robv.android.xposed.XposedHelpers.setAdditionalInstanceField
 
 object UnlockForegroundPin : BaseHook() {
-    override fun init() = if (IS_HYPER_OS) initForHyperOS() else initForMIUI()
+    override val key = "unlock_foreground_pin"
+    override fun hook() = if (IS_HYPER_OS) initForHyperOS() else initForMIUI()
     private val clazzMiuiFreeFormGestureController by lazy {
         loadClass("com.android.server.wm.MiuiFreeFormGestureController")
     }
@@ -35,7 +36,8 @@ object UnlockForegroundPin : BaseHook() {
                 before { param ->
                     val stack = param.args[0] ?: return@before
                     val mTask = getObjectOrNull(stack, "mTask") ?: return@before
-                    val surfaceControl = getObjectOrNullUntilSuperclassAs<SurfaceControl>(mTask, "mSurfaceControl")
+                    val surfaceControl =
+                        getObjectOrNullUntilSuperclassAs<SurfaceControl>(mTask, "mSurfaceControl")
                     if (surfaceControl?.isValid == true) {
                         val transaction = SurfaceControl.Transaction()
                         invokeMethodBestMatch(transaction, "hide", null, surfaceControl)
@@ -56,15 +58,15 @@ object UnlockForegroundPin : BaseHook() {
                     val thisObject = param.thisObject
                     val taskId = invokeMethodBestMatch(thisObject, "getRootTaskId") as Int
                     val inPinMode =
-                        thisObject.objectHelper().getObjectOrNullUntilSuperclass("mWmService")?.objectHelper()
-                            ?.getObjectOrNull("mAtmService")?.objectHelper()
+                        thisObject.objectHelper().getObjectOrNullUntilSuperclass("mWmService")
+                            ?.objectHelper()?.getObjectOrNull("mAtmService")?.objectHelper()
                             ?.getObjectOrNull("mMiuiFreeFormManagerService")?.objectHelper()
                             ?.invokeMethodBestMatch("getMiuiFreeFormActivityStack", null, taskId)
                             ?.objectHelper()?.invokeMethodBestMatch("inPinMode") as Boolean?
                             ?: return@after
-                    val mSurfaceControl =
-                        getObjectOrNullUntilSuperclassAs<SurfaceControl>(thisObject, "mSurfaceControl")
-                            ?: return@after
+                    val mSurfaceControl = getObjectOrNullUntilSuperclassAs<SurfaceControl>(
+                        thisObject, "mSurfaceControl"
+                    ) ?: return@after
                     val transaction = invokeMethodBestMatch(
                         thisObject, "getSyncTransaction"
                     ) as SurfaceControl.Transaction
