@@ -5,11 +5,5 @@ import com.yifeplayte.maxfreeform.hook.hooks.singlepackage.android.UnlockForegro
 import com.yifeplayte.maxfreeform.hook.hooks.singlepackage.android.UnlockFreeformQuantityLimit
 import com.yifeplayte.maxfreeform.hook.hooks.singlepackage.android.UnlockSideHideFreeform
 
-object Android : BasePackage() {
-    override val packageName = "android"
-    override val hooks = setOf(
-        UnlockFreeformQuantityLimit,
-        UnlockSideHideFreeform,
-        UnlockForegroundPin,
-    )
-}
+@Suppress("unused")
+object Android : BasePackage("android")

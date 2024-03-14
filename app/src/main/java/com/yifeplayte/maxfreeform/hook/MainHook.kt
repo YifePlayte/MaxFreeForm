@@ -1,25 +1,20 @@
 package com.yifeplayte.maxfreeform.hook
 
 import com.github.kyuubiran.ezxhelper.EzXHelper
-import com.yifeplayte.maxfreeform.hook.hooks.multipackage.RemoveConversationBubbleSettingsRestriction
-import com.yifeplayte.maxfreeform.hook.hooks.multipackage.RemoveSmallWindowRestrictions
-import com.yifeplayte.maxfreeform.hook.hooks.singlepackage.Android
-import com.yifeplayte.maxfreeform.hook.hooks.singlepackage.Home
-import com.yifeplayte.maxfreeform.hook.hooks.singlepackage.SystemUI
+import com.yifeplayte.maxfreeform.hook.hooks.BaseMultiHook
+import com.yifeplayte.maxfreeform.hook.hooks.BasePackage
+import com.yifeplayte.maxfreeform.utils.ClassScanner.scanObjectOf
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.IXposedHookZygoteInit
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 private const val TAG = "MaxFreeForm"
-private val singlePackagesHooked = setOf(
-    Android,
-    Home,
-    SystemUI,
-)
-private val multiPackagesHooked = setOf(
-    RemoveConversationBubbleSettingsRestriction,
-    RemoveSmallWindowRestrictions,
-)
+private val singlePackagesHooked by lazy {
+    scanObjectOf<BasePackage>("com.yifeplayte.maxfreeform.hook.hooks.singlepackage")
+}
+private val multiPackagesHooked by lazy {
+    scanObjectOf<BaseMultiHook>("com.yifeplayte.maxfreeform.hook.hooks.multipackage")
+}
 val PACKAGE_NAME_HOOKED: Set<String>
     get() {
         val packageNameHooked = mutableSetOf<String>()

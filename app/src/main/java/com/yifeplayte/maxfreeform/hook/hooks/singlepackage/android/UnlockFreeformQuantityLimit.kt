@@ -6,6 +6,7 @@ import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 
+@Suppress("unused")
 object UnlockFreeformQuantityLimit : BaseHook() {
     override val key = "unlock_freeform_quantity_limit"
     override val isEnabled = true

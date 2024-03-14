@@ -7,6 +7,7 @@ import com.github.kyuubiran.ezxhelper.ObjectHelper.Companion.objectHelper
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseMultiHook
 
+@Suppress("unused")
 object RemoveSmallWindowRestrictions : BaseMultiHook() {
     override val key = "remove_small_window_restrictions"
     override val hooks = mapOf(

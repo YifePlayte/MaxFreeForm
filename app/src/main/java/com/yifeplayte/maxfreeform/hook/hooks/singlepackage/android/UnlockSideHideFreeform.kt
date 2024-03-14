@@ -6,6 +6,7 @@ import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinde
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 
+@Suppress("unused")
 object UnlockSideHideFreeform : BaseHook() {
     override val key = "unlock_side_hide_freeform"
     override val isEnabled get() = !IS_HYPER_OS and super.isEnabled

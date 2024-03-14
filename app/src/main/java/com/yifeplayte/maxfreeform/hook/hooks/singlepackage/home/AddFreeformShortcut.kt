@@ -23,6 +23,7 @@ import com.yifeplayte.maxfreeform.R
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.utils.Build.IS_TABLET
 
+@Suppress("unused")
 object AddFreeformShortcut : BaseHook() {
     override val key = "add_freeform_shortcut"
     private val clazzLauncherUtils by lazy { loadClass("com.miui.launcher.utils.LauncherUtils") }

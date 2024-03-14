@@ -17,7 +17,6 @@ abstract class BaseMultiHook {
             invoke()
             isInit = true
             Log.ix("Inited hook: ${this@BaseMultiHook.javaClass.simpleName} in: $hostPackageName")
-        }
-            ?.logexIfThrow("Failed init hook: ${this@BaseMultiHook.javaClass.simpleName} in: $hostPackageName")
+        }?.logexIfThrow("Failed init hook: ${this@BaseMultiHook.javaClass.simpleName} in: $hostPackageName")
     }
 }

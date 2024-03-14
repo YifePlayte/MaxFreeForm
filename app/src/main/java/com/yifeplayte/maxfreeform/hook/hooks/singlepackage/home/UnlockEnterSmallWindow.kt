@@ -11,6 +11,7 @@ import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinde
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 
+@Suppress("unused")
 object UnlockEnterSmallWindow : BaseHook() {
     override val key = "unlock_enter_small_window"
     override val isEnabled get() = !IS_HYPER_OS

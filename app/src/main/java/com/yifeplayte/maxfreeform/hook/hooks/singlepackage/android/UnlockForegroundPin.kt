@@ -18,6 +18,7 @@ import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 import de.robv.android.xposed.XposedHelpers.getAdditionalInstanceField
 import de.robv.android.xposed.XposedHelpers.setAdditionalInstanceField
 
+@Suppress("unused")
 object UnlockForegroundPin : BaseHook() {
     override val key = "unlock_foreground_pin"
     override fun hook() = if (IS_HYPER_OS) initForHyperOS() else initForMIUI()

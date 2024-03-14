@@ -5,26 +5,35 @@ import java.io.DataOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 
+/**
+ * 指令 工具
+ */
+@Suppress("unused")
 object Terminal {
+    /**
+     * 执行单条指令
+     * @param command 指令
+     * @return 指令运行输出
+     */
     fun exec(command: String): String {
         var process: Process? = null
-        var reader: BufferedReader? = null
-        var `is`: InputStreamReader? = null
-        var os: DataOutputStream? = null
+        var bufferedReader: BufferedReader? = null
+        var inputStreamReader: InputStreamReader? = null
+        var outputStream: DataOutputStream? = null
         return try {
             process = Runtime.getRuntime().exec("su")
-            `is` = InputStreamReader(process.inputStream)
-            reader = BufferedReader(`is`)
-            os = DataOutputStream(process.outputStream)
-            os.writeBytes(
+            inputStreamReader = InputStreamReader(process.inputStream)
+            bufferedReader = BufferedReader(inputStreamReader)
+            outputStream = DataOutputStream(process.outputStream)
+            outputStream.writeBytes(
                 command.trimIndent()
             )
-            os.writeBytes("\nexit\n")
-            os.flush()
+            outputStream.writeBytes("\nexit\n")
+            outputStream.flush()
             var read: Int
             val buffer = CharArray(4096)
             val output = StringBuilder()
-            while (reader.read(buffer).also { read = it } > 0) {
+            while (bufferedReader.read(buffer).also { read = it } > 0) {
                 output.appendRange(buffer, 0, read)
             }
             process.waitFor()
@@ -35,9 +44,9 @@ object Terminal {
             throw RuntimeException(e)
         } finally {
             try {
-                os?.close()
-                `is`?.close()
-                reader?.close()
+                outputStream?.close()
+                inputStreamReader?.close()
+                bufferedReader?.close()
                 process?.destroy()
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -45,6 +54,11 @@ object Terminal {
         }
     }
 
+    /**
+     * 执行多条指令
+     * @param commands 指令
+     * @return 指令运行输出
+     */
     fun exec(commands: Array<String>): String {
         val stringBuilder = java.lang.StringBuilder()
         for (command in commands) {

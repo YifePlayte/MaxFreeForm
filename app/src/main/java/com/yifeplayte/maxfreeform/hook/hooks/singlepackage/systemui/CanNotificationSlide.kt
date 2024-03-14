@@ -9,6 +9,7 @@ import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinde
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 
+@Suppress("unused")
 object CanNotificationSlide : BaseHook() {
     override val key = "can_notification_slide"
     override fun hook() {

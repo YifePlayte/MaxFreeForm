@@ -1,15 +1,18 @@
 package com.yifeplayte.maxfreeform.hook.hooks
 
-import com.github.kyuubiran.ezxhelper.EzXHelper.hostPackageName
+import com.github.kyuubiran.ezxhelper.EzXHelper
 import com.github.kyuubiran.ezxhelper.Log
 import com.github.kyuubiran.ezxhelper.LogExtensions.logexIfThrow
+import com.yifeplayte.maxfreeform.utils.ClassScanner.scanObjectOf
 
-abstract class BasePackage {
+abstract class BasePackage(val packageName: String) {
     private var isInit: Boolean = false
-    abstract val packageName: String
-    abstract val hooks: Set<BaseHook>
+    open val hooks: List<BaseHook> by lazy {
+        scanObjectOf<BaseHook>(javaClass.packageName + "." + javaClass.simpleName.lowercase())
+    }
+
     fun init() {
-        if (hostPackageName != packageName) return
+        if (EzXHelper.hostPackageName != packageName) return
         if (isInit) return
         runCatching {
             hooks.forEach { it.init() }

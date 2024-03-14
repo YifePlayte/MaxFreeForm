@@ -12,6 +12,7 @@ import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinde
 import com.yifeplayte.maxfreeform.hook.hooks.BaseMultiHook
 import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 
+@Suppress("unused")
 object RemoveConversationBubbleSettingsRestriction : BaseMultiHook() {
     override val key = "remove_conversation_bubble_settings_restriction"
     override val hooks = mapOf(
