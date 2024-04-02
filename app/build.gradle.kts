@@ -71,8 +71,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":blockmiui"))
-    implementation("com.github.kyuubiran:EzXHelper:2.0.8")
-    implementation("io.github.ranlee1:jpinyin:1.0.1")
     compileOnly("de.robv.android.xposed:api:82")
+    implementation("com.github.kyuubiran:EzXHelper:2.1.1")
+    implementation("io.github.ranlee1:jpinyin:1.0.1")
+    implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
+    implementation(project(":blockmiui"))
 }

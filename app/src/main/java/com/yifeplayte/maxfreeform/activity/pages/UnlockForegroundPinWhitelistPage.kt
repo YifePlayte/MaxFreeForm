@@ -8,6 +8,5 @@ import com.yifeplayte.maxfreeform.R
 @BMPage(
     key = "UnlockForegroundPinWhitelistPage", titleId = R.string.unlock_foreground_pin_whitelist
 )
-class UnlockForegroundPinWhitelistPage : BaseSelectApplicationsPage() {
-    override val key: String = "unlock_foreground_pin_whitelist"
-}
+class UnlockForegroundPinWhitelistPage :
+    BaseSelectApplicationsPage("unlock_foreground_pin_whitelist")
