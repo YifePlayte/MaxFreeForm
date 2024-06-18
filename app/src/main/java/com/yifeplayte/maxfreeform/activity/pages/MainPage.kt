@@ -65,15 +65,15 @@ class MainPage : BasePage() {
                 dataBindingSend = bindingUnlockForegroundPin.bindingSend
             )
         )
+        TextSummaryWithArrow(
+            TextSummaryV(
+                textId = R.string.unlock_foreground_pin_whitelist
+            ) {
+                showFragment("UnlockForegroundPinWhitelistPage")
+            },
+            dataBindingRecv = bindingUnlockForegroundPin.getRecv(1)
+        )
         if (IS_HYPER_OS) {
-            TextSummaryWithArrow(
-                TextSummaryV(
-                    textId = R.string.unlock_foreground_pin_whitelist
-                ) {
-                    showFragment("UnlockForegroundPinWhitelistPage")
-                },
-                dataBindingRecv = bindingUnlockForegroundPin.getRecv(1)
-            )
             TextSummaryWithSwitch(
                 TextSummaryV(
                     textId = R.string.unlock_multiple_task,
