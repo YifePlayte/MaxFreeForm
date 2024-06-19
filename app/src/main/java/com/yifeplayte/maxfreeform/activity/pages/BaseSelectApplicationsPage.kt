@@ -2,7 +2,7 @@ package com.yifeplayte.maxfreeform.activity.pages
 
 import android.content.pm.ApplicationInfo
 import android.graphics.drawable.BitmapDrawable
-import cn.fkj233.ui.activity.MIUIActivity
+import cn.fkj233.ui.activity.MIUIActivity.Companion.safeSP
 import cn.fkj233.ui.activity.data.BasePage
 import cn.fkj233.ui.activity.dp2px
 import cn.fkj233.ui.activity.fragment.MIUIFragment
@@ -18,8 +18,8 @@ import com.yifeplayte.maxfreeform.utils.SharedPreferences.addStringToStringSet
 import com.yifeplayte.maxfreeform.utils.SharedPreferences.generateStringSetFromTempBoolean
 import com.yifeplayte.maxfreeform.utils.SharedPreferences.prepareTempBooleanFromStringSet
 import com.yifeplayte.maxfreeform.utils.SharedPreferences.removeStringFromStringSet
-import io.github.ranlee1.jpinyin.PinyinFormat
-import io.github.ranlee1.jpinyin.PinyinHelper
+import io.github.ranlee1.jpinyin.PinyinFormat.WITHOUT_TONE
+import io.github.ranlee1.jpinyin.PinyinHelper.convertToPinyinString
 import me.zhanghai.android.appiconloader.AppIconLoader
 
 abstract class BaseSelectApplicationsPage(val key: String) : BasePage() {
@@ -39,7 +39,7 @@ abstract class BaseSelectApplicationsPage(val key: String) : BasePage() {
     private fun initApplicationList(
         fragment: MIUIFragment,
         keyword: String = "",
-        showSystemApplications: Boolean = MIUIActivity.safeSP.mSP?.getBoolean(
+        showSystemApplications: Boolean = safeSP.mSP?.getBoolean(
             "temp_show_system_applications", false
         ) == true
     ) {
@@ -86,8 +86,7 @@ abstract class BaseSelectApplicationsPage(val key: String) : BasePage() {
                     )
                 }.associateWith {
                     val label = it.loadLabel(activity.packageManager).toString()
-                    PinyinHelper.convertToPinyinString(label, "", PinyinFormat.WITHOUT_TONE)
-                        .lowercase()
+                    convertToPinyinString(label, "", WITHOUT_TONE).lowercase()
                 }.entries.sortedBy { it.value }.map { it.key }
             val appIconLoader = AppIconLoader(dp2px(activity, 50f), false, activity)
             applicationsInfo.forEach { applicationInfo ->
@@ -121,7 +120,7 @@ abstract class BaseSelectApplicationsPage(val key: String) : BasePage() {
     private fun reloadApplicationList(
         fragment: MIUIFragment,
         keyword: String = "",
-        showSystemApplications: Boolean = MIUIActivity.safeSP.mSP?.getBoolean(
+        showSystemApplications: Boolean = safeSP.mSP?.getBoolean(
             "temp_show_system_applications", false
         ) == true
     ) {
