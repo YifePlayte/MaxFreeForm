@@ -20,7 +20,9 @@
     <string name="remove_conversation_bubble_settings_restriction">去除气泡通知应用限制</string>
     <string name="remove_conversation_bubble_settings_restriction_tips">可以通过“系统设置 - 更多设置 - 自由窗口 - 气泡通知 - 气泡通知应用管理”管理贴边应用的通知</string>
     <string name="remove_freeform_bottom_bar">移除小窗小白条</string>
-    <string name="remove_freeform_top_bar">移除小窗顶栏</string>
+    <string name="remove_freeform_top_bar">所有应用移除小窗顶栏</string>
+    <string name="remove_freeform_top_bar_list">选择应用移除小窗顶栏</string>
+    <string name="remove_freeform_top_bar_list_tips">需要关闭“所有应用移除小窗顶栏”</string>
     <string name="remove_small_window_restrictions">强制允许小窗</string>
     <string name="remove_small_window_restrictions_tips">忽略系统黑名单与软件禁止小窗</string>
     <string name="reset_configuration">重置模块配置</string>

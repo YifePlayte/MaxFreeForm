@@ -6,6 +6,7 @@ import cn.fkj233.ui.activity.MIUIActivity
 import cn.fkj233.ui.dialog.MIUIDialog
 import com.yifeplayte.maxfreeform.R
 import com.yifeplayte.maxfreeform.activity.pages.MainPage
+import com.yifeplayte.maxfreeform.activity.pages.RemoveFreeformTopBarListPage
 import com.yifeplayte.maxfreeform.activity.pages.UnlockForegroundPinWhitelistPage
 import com.yifeplayte.maxfreeform.utils.SharedPreferences.clearTemp
 import kotlin.system.exitProcess
@@ -40,5 +41,6 @@ class MainActivity : MIUIActivity() {
         activity = this
         registerPage(MainPage::class.java)
         registerPage(UnlockForegroundPinWhitelistPage::class.java)
+        registerPage(RemoveFreeformTopBarListPage::class.java)
     }
 }

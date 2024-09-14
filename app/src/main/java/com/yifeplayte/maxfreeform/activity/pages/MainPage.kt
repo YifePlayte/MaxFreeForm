@@ -90,6 +90,14 @@ class MainPage : BasePage() {
                     textId = R.string.remove_freeform_top_bar
                 ), SwitchV("remove_freeform_top_bar")
             )
+            TextSummaryWithArrow(
+                TextSummaryV(
+                    textId = R.string.remove_freeform_top_bar_list,
+                    tipsId = R.string.remove_freeform_top_bar_list_tips,
+                ) {
+                    showFragment("RemoveFreeformTopBarListPage")
+                }
+            )
             TextSummaryWithSwitch(
                 TextSummaryV(
                     textId = R.string.remove_freeform_bottom_bar

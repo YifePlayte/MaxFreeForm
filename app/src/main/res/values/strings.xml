@@ -20,7 +20,9 @@
     <string name="remove_conversation_bubble_settings_restriction">Remove conversation bubble settings restriction</string>
     <string name="remove_conversation_bubble_settings_restriction_tips">You can manage which apps can show conversation bubbles in \"System settings - Additional settings - Floating windows - Conversation bubbles - Manage conversation bubbles\"</string>
     <string name="remove_freeform_bottom_bar">Remove bottom bar of floating windows</string>
-    <string name="remove_freeform_top_bar">Remove top bar of floating windows</string>
+    <string name="remove_freeform_top_bar">Remove top bar of floating windows for all apps</string>
+    <string name="remove_freeform_top_bar_list">Remove top bar of floating windows for selected apps</string>
+    <string name="remove_freeform_top_bar_list_tips">Disable \"Remove top bar of floating windows for all apps\" is needed</string>
     <string name="remove_small_window_restrictions">Force enable floating window</string>
     <string name="remove_small_window_restrictions_tips">Ignore system blacklist and software prohibition of small windows</string>
     <string name="reset_configuration">Reset all settings</string>
