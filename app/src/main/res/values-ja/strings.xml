@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="add_freeform_shortcut">フリーフォームと新しいタスクのショートカットを追加</string>
+  <string name="add_freeform_shortcut_tips">システムランチャーにショートカットメニューを追加します</string>
+  <string name="app_name" translatable="false">MaxFreeForm</string>
+  <string name="can_notification_slide">殆どの通知をフローティングウィンドウにスライド可能にする</string>
+  <string name="can_notification_slide_tips">MiPush 経由の一部の通知は非対応の場合があります</string>
+  <string name="cancel">キャンセル</string>
+  <string name="clear">消去</string>
+  <string name="done">OK</string>
+  <string name="finished">完了しました</string>
+  <string name="freeform">フリーフォーム</string>
+  <string name="hide_freeform_top_bar">フローティングウィンドウのトップバーを視覚的に隠す</string>
+  <string name="maxfreeform_tips">マルチフリーフォームの制限を解除します</string>
+  <string name="more">詳細</string>
+  <string name="new_task">新しいタスク</string>
+  <string name="not_support">古いバージョンの LSPosed を使用しているか、LSPosed がアクティブになっていないようです。LSPosed を更新するか、アクティブの状態にして再度お試しください。</string>
+  <string name="reboot">再起動</string>
+  <string name="reboot_system">システムを再起動</string>
+  <string name="reboot_tips">再起動をしてよろしいですか？</string>
+  <string name="remove_conversation_bubble_settings_restriction">会話のバブル設定の制限を解除</string>
+  <string name="remove_conversation_bubble_settings_restriction_tips">会話のバブルを表示できるアプリは｢設定 - 追加設定 - フローティングウィンドウ - 会話のバブル - 会話のバブルの管理｣で行えます</string>
+  <string name="remove_freeform_bottom_bar">フローティングウィンドウのボトムバーを削除する</string>
+  <string name="remove_freeform_top_bar">すべてのアプリのトップバーを削除する</string>
+  <string name="remove_freeform_top_bar_list">選択したアプリのフローティングウィンドウのトップバーを削除する</string>
+  <string name="remove_freeform_top_bar_list_tips">｢すべてのアプリのトップバーを削除する｣を無効化する必要があります</string>
+  <string name="remove_small_window_restrictions">フローティングウィンドウを強制的に有効化</string>
+  <string name="remove_small_window_restrictions_tips">システムのブラックリストによるスモールウィンドウの制限を無視します</string>
+  <string name="reset_configuration">すべての設定をリセット</string>
+  <string name="reset_configuration_tips">すべての設定をリセットしてもよろしいですか？</string>
+  <string name="restart_all_scope">すべてのスコープを再起動</string>
+  <string name="restart_all_scope_tips">すべてのスコープを再起動してもよろしいですか？</string>
+  <string name="search">検索</string>
+  <string name="show_system_applications">システムアプリを表示</string>
+  <string name="side_hide_freeform">フローティングウィンドウを横方向で隠す機能を解放</string>
+  <string name="side_hide_freeform_tips">サポートをしていても制限されているデバイスで、フローティングウィンドウを横方向で隠す機能を解放します</string>
+  <string name="tips">ヒント</string>
+  <string name="try_to_fix_conversation_bubbles">会話のバブルを修正する</string>
+  <string name="try_to_fix_conversation_bubbles_tips">会話のバブルサービスを再度有効化します</string>
+  <string name="unlock_foreground_pin">フローティングウィンドウをフォアグラウンドで隠す機能を解放</string>
+  <string name="unlock_foreground_pin_whitelist">｢フローティングウィンドウをフォアグラウンドで隠す｣のホワイトリスト</string>
+  <string name="unlock_multiple_task">マルチタスクボタンを解放</string>
+  <string name="unlock_multiple_task_tips">ボタンはフローティングウィンドウのトップバー上にあります</string>
+  <string name="warning">警告</string>
+  <string name="xposed_description">MIUI と HyperOS デバイスのマルチフリーフォームの制限を解除します</string>
+</resources>
