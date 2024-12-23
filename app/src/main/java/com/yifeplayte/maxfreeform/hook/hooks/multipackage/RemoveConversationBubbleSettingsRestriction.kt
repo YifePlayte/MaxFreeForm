@@ -4,7 +4,10 @@ import android.content.Context
 import android.os.UserHandle
 import android.provider.Settings
 import android.util.ArrayMap
-import com.github.kyuubiran.ezxhelper.ClassUtils
+import com.github.kyuubiran.ezxhelper.ClassUtils.getStaticObjectOrNullAs
+import com.github.kyuubiran.ezxhelper.ClassUtils.invokeStaticMethodBestMatch
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadFirstClass
 import com.github.kyuubiran.ezxhelper.EzXHelper.hostPackageName
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.ObjectUtils
@@ -28,21 +31,27 @@ object RemoveConversationBubbleSettingsRestriction : BaseMultiHook() {
 
     private fun systemUi() {
         if (!IS_HYPER_OS) return
-        val clazzBubbleApp = ClassUtils.loadClass("miui.app.MiuiBubbleApp")
+        val clazzBubbleApp = loadClass("miui.app.MiuiBubbleApp")
         val constructorBubbleApp =
             clazzBubbleApp.getConstructor(String::class.java, Int::class.java)
-        val clazzMiuiMultiWindowUtils = ClassUtils.loadClass("android.util.MiuiMultiWindowUtils")
+        val clazzMiuiMultiWindowUtils = loadClass("android.util.MiuiMultiWindowUtils")
         val clazzMiuiBubbleSettings =
-            ClassUtils.loadClass("com.android.wm.shell.miuifreeform.miuibubbles.settings.MiuiBubbleSettings")
-        ClassUtils.loadClass("com.android.wm.shell.miuifreeform.miuibubbles.MiuiBubbleController").declaredConstructors.first()
+            loadFirstClass(
+                "com.android.wm.shell.multitasking.miuifreeform.miuibubbles.settings.MiuiBubbleSettings",
+                "com.android.wm.shell.miuifreeform.miuibubbles.settings.MiuiBubbleSettings",
+            )
+        loadFirstClass(
+            "com.android.wm.shell.multitasking.miuifreeform.miuibubbles.MiuiBubbleController",
+            "com.android.wm.shell.miuifreeform.miuibubbles.MiuiBubbleController",
+        ).declaredConstructors.first()
             .createHook {
                 after { param ->
                     val arrayMap = ArrayMap<String, Any>()
                     val mContext =
                         ObjectUtils.getObjectOrNullAs<Context>(param.thisObject, "mContext")
                     val mCurrentUserId =
-                        ClassUtils.invokeStaticMethodBestMatch(UserHandle::class.java, "myUserId")
-                    val freeformSuggestionList = ClassUtils.invokeStaticMethodBestMatch(
+                        invokeStaticMethodBestMatch(UserHandle::class.java, "myUserId")
+                    val freeformSuggestionList = invokeStaticMethodBestMatch(
                         clazzMiuiMultiWindowUtils, "getFreeformSuggestionList", null, mContext
                     ) as List<*>
                     freeformSuggestionList.associateWith { pkg ->
@@ -52,11 +61,11 @@ object RemoveConversationBubbleSettingsRestriction : BaseMultiHook() {
                     }.forEach { (pkg, bubbleApp) ->
                         arrayMap[pkg as String] = bubbleApp
                     }
-                    val mBubbleAppMaps = ClassUtils.getStaticObjectOrNullAs<ArrayMap<String, Any>>(
+                    val mBubbleAppMaps = getStaticObjectOrNullAs<ArrayMap<String, Any>>(
                         clazzMiuiBubbleSettings, "mBubbleAppMaps"
                     )
                     mBubbleAppMaps?.putAll(arrayMap)
-                    ClassUtils.invokeStaticMethodBestMatch(
+                    invokeStaticMethodBestMatch(
                         clazzMiuiBubbleSettings, "updateBubbleAppStates", null, mContext
                     )
                     val stringMiuiBubbleAppSettings = buildString {
@@ -76,11 +85,11 @@ object RemoveConversationBubbleSettingsRestriction : BaseMultiHook() {
 
     private fun securityCenter() {
         if (IS_HYPER_OS) return
-        val clazzBubbleApp = ClassUtils.loadClass("com.miui.bubbles.settings.BubbleApp")
+        val clazzBubbleApp = loadClass("com.miui.bubbles.settings.BubbleApp")
         val constructorBubbleApp =
             clazzBubbleApp.getConstructor(String::class.java, Int::class.java)
-        val clazzMiuiMultiWindowUtils = ClassUtils.loadClass("android.util.MiuiMultiWindowUtils")
-        ClassUtils.loadClass("com.miui.bubbles.settings.BubblesSettings").methodFinder()
+        val clazzMiuiMultiWindowUtils = loadClass("android.util.MiuiMultiWindowUtils")
+        loadClass("com.miui.bubbles.settings.BubblesSettings").methodFinder()
             .filterByName("getDefaultBubbles").first().createHook {
                 before { param ->
                     val arrayMap = ArrayMap<String, Any>()
@@ -88,7 +97,7 @@ object RemoveConversationBubbleSettingsRestriction : BaseMultiHook() {
                         ObjectUtils.getObjectOrNullAs<Context>(param.thisObject, "mContext")
                     val mCurrentUserId =
                         ObjectUtils.getObjectOrNullAs<Int>(param.thisObject, "mCurrentUserId")
-                    val freeformSuggestionList = ClassUtils.invokeStaticMethodBestMatch(
+                    val freeformSuggestionList = invokeStaticMethodBestMatch(
                         clazzMiuiMultiWindowUtils, "getFreeformSuggestionList", null, mContext
                     ) as List<*>
                     freeformSuggestionList.associateWith { pkg ->

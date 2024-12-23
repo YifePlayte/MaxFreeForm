@@ -1,6 +1,6 @@
 package com.yifeplayte.maxfreeform.hook.hooks.singlepackage.systemui
 
-import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadFirstClass
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
@@ -13,7 +13,10 @@ object RemoveFreeformTopBarForList : BaseHook() {
     override val isEnabled get() = IS_HYPER_OS
     override fun hook() {
         val clazzMiuiMultiWinSwitchConfig =
-            loadClass("com.android.wm.shell.miuimultiwinswitch.MiuiMultiWinSwitchConfig")
+            loadFirstClass(
+                "com.android.wm.shell.multitasking.miuimultiwinswitch.MulWinSwitchConfig",
+                "com.android.wm.shell.miuimultiwinswitch.MiuiMultiWinSwitchConfig",
+            )
         clazzMiuiMultiWinSwitchConfig.methodFinder().filterByName("getDotBlackList").single()
             .createHook {
                 before {

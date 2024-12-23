@@ -1,7 +1,7 @@
 package com.yifeplayte.maxfreeform.hook.hooks.singlepackage.systemui
 
 import android.view.View
-import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadFirstClass
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
@@ -13,7 +13,10 @@ object HideFreeformTopBar : BaseHook() {
     override val isEnabled get() = IS_HYPER_OS and super.isEnabled
     override fun hook() {
         val clazzMiuiBaseWindowDecoration =
-            loadClass("com.android.wm.shell.miuimultiwinswitch.miuiwindowdecor.MiuiBaseWindowDecoration")
+            loadFirstClass(
+                "com.android.wm.shell.multitasking.miuimultiwinswitch.miuiwindowdecor.MiuiTopDecoration",
+                "com.android.wm.shell.miuimultiwinswitch.miuiwindowdecor.MiuiBaseWindowDecoration",
+            )
         clazzMiuiBaseWindowDecoration.methodFinder().filterByName("createTopCaption").first()
             .createHook {
                 after {

@@ -1,6 +1,7 @@
 package com.yifeplayte.maxfreeform.hook.hooks.singlepackage.systemui
 
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClassOrNull
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.ObjectUtils.getObjectOrNull
 import com.github.kyuubiran.ezxhelper.ObjectUtils.getObjectOrNullAs
@@ -13,8 +14,8 @@ import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 object CanNotificationSlide : BaseHook() {
     override val key = "can_notification_slide"
     override fun hook() {
-        loadClass("com.android.systemui.statusbar.notification.NotificationSettingsManager").methodFinder()
-            .filterByName("canSlide").firstOrNull()?.createHook {
+        loadClassOrNull("com.android.systemui.statusbar.notification.NotificationSettingsManager")?.methodFinder()
+            ?.filterByName("canSlide")?.firstOrNull()?.createHook {
                 returnConstant(true)
             }
         if (!IS_HYPER_OS) return
