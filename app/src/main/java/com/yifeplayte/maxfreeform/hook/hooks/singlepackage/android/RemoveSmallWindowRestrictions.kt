@@ -1,31 +1,25 @@
-package com.yifeplayte.maxfreeform.hook.hooks.multipackage
+package com.yifeplayte.maxfreeform.hook.hooks.singlepackage.android
 
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
-import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
 import com.github.kyuubiran.ezxhelper.ObjectHelper.Companion.objectHelper
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
-import com.yifeplayte.maxfreeform.hook.hooks.BaseMultiHook
+import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 
 @Suppress("unused")
-object RemoveSmallWindowRestrictions : BaseMultiHook() {
+object RemoveSmallWindowRestrictions : BaseHook() {
     override val key = "remove_small_window_restrictions"
-    override val hooks = mapOf(
-        "android" to { hook() },
-        "com.android.systemui" to { hook() },
-    )
-
-    private fun hook() {
+    override fun hook() {
         runCatching {
             loadClass("android.app.ActivityTaskManager").methodFinder()
-                .filterByName("supportsSplitScreen").toList().createHooks {
+                .filterByName("supportsSplitScreen").filterNonAbstract().toList().createHooks {
                     returnConstant(true)
                 }
         }
 
         runCatching {
             loadClass("com.android.server.wm.ActivityTaskManagerService").methodFinder()
-                .filterByName("retrieveSettings").toList().createHooks {
+                .filterByName("retrieveSettings").filterNonAbstract().toList().createHooks {
                     after {
                         it.thisObject.objectHelper()
                             .setObject("mDevEnableNonResizableMultiWindow", true)
@@ -37,7 +31,7 @@ object RemoveSmallWindowRestrictions : BaseMultiHook() {
             loadClass("com.android.server.wm.WindowManagerService\$SettingsObserver").methodFinder()
                 .filter {
                     name in setOf("updateDevEnableNonResizableMultiWindow", "onChange")
-                }.toList().createHooks {
+                }.filterNonAbstract().toList().createHooks {
                     after {
                         val this0 = it.thisObject.objectHelper().getObjectOrNull("this\$0")!!
                         val mAtmService = this0.objectHelper().getObjectOrNull("mAtmService")!!
@@ -49,32 +43,33 @@ object RemoveSmallWindowRestrictions : BaseMultiHook() {
 
         runCatching {
             loadClass("android.util.MiuiMultiWindowUtils").methodFinder()
-                .filterByName("isForceResizeable").first().createHook {
+                .filterByName("isForceResizeable").filterNonAbstract().toList().createHooks {
                     returnConstant(true)
                 }
         }
 
         runCatching {
-            loadClass("android.util.MiuiMultiWindowAdapter").methodFinder().filter {
-                name.contains("BlackList", true)
-            }.filterByAssignableReturnType(MutableList::class.java).toList().apply {
-                createHooks {
-                    returnConstant(mutableListOf<String>())
+            loadClass("android.util.MiuiMultiWindowAdapter").methodFinder()
+                .filter { name.contains("BlackList", true) }
+                .filterByAssignableReturnType(MutableList::class.java).filterNonAbstract().toList()
+                .apply {
+                    createHooks {
+                        returnConstant(mutableListOf<String>())
+                    }
                 }
-            }
         }
 
         // Author: LittleTurtle2333
         runCatching {
             loadClass("com.android.server.wm.Task").methodFinder().filterByName("isResizeable")
-                .first().createHook {
+                .filterNonAbstract().toList().createHooks {
                     returnConstant(true)
                 }
         }
 
         runCatching {
             loadClass("android.util.MiuiMultiWindowUtils").methodFinder()
-                .filterByName("supportFreeform").first().createHook {
+                .filterByName("supportFreeform").filterNonAbstract().toList().createHooks {
                     returnConstant(true)
                 }
         }
