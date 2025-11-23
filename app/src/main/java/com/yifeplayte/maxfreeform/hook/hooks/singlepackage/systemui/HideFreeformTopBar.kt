@@ -5,12 +5,13 @@ import com.github.kyuubiran.ezxhelper.ClassUtils.loadFirstClass
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
+import com.yifeplayte.maxfreeform.utils.Build.HYPER_OS_VERSION_CODE
 import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 
 @Suppress("unused")
 object HideFreeformTopBar : BaseHook() {
     override val key = "hide_freeform_top_bar"
-    override val isEnabled get() = IS_HYPER_OS and super.isEnabled
+    override val isEnabled get() = IS_HYPER_OS and (HYPER_OS_VERSION_CODE < 3) and super.isEnabled
     override fun hook() {
         val clazzMiuiBaseWindowDecoration =
             loadFirstClass(

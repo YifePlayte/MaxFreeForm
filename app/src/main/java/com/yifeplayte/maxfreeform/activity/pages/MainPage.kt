@@ -11,6 +11,7 @@ import cn.fkj233.ui.activity.view.TextSummaryV
 import cn.fkj233.ui.dialog.MIUIDialog
 import com.yifeplayte.maxfreeform.R
 import com.yifeplayte.maxfreeform.hook.PACKAGE_NAME_HOOKED
+import com.yifeplayte.maxfreeform.utils.Build.HYPER_OS_VERSION_CODE
 import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
 import com.yifeplayte.maxfreeform.utils.Terminal
 import kotlin.system.exitProcess
@@ -80,11 +81,13 @@ class MainPage : BasePage() {
                     tipsId = R.string.unlock_multiple_task_tips
                 ), SwitchV("unlock_multiple_task")
             )
-            TextSummaryWithSwitch(
-                TextSummaryV(
-                    textId = R.string.hide_freeform_top_bar
-                ), SwitchV("hide_freeform_top_bar")
-            )
+            if (HYPER_OS_VERSION_CODE < 3) {
+                TextSummaryWithSwitch(
+                    TextSummaryV(
+                        textId = R.string.hide_freeform_top_bar
+                    ), SwitchV("hide_freeform_top_bar")
+                )
+            }
             TextSummaryWithSwitch(
                 TextSummaryV(
                     textId = R.string.remove_freeform_top_bar
@@ -106,68 +109,72 @@ class MainPage : BasePage() {
         }
         Line()
         TitleText(textId = R.string.more)
-        TextSummaryWithArrow(TextSummaryV(
-            textId = R.string.try_to_fix_conversation_bubbles,
-            tipsId = R.string.try_to_fix_conversation_bubbles_tips
-        ) {
-            Terminal.exec("pm enable com.miui.securitycenter/com.miui.bubbles.services.BubblesNotificationListenerService")
-            Toast.makeText(
-                activity, getString(R.string.finished), Toast.LENGTH_SHORT
-            ).show()
-        })
-        TextSummaryWithArrow(TextSummaryV(
-            textId = R.string.reset_configuration
-        ) {
-            MIUIDialog(activity) {
-                setTitle(R.string.warning)
-                setMessage(R.string.reset_configuration_tips)
-                setLButton(R.string.cancel) {
-                    dismiss()
-                }
-                setRButton(R.string.done) {
-                    MIUIActivity.safeSP.mSP?.edit()?.clear()?.apply()
-                    Toast.makeText(
-                        activity, getString(R.string.finished), Toast.LENGTH_SHORT
-                    ).show()
-                    exitProcess(0)
-                }
-            }.show()
-        })
+        TextSummaryWithArrow(
+            TextSummaryV(
+                textId = R.string.try_to_fix_conversation_bubbles,
+                tipsId = R.string.try_to_fix_conversation_bubbles_tips
+            ) {
+                Terminal.exec("pm enable com.miui.securitycenter/com.miui.bubbles.services.BubblesNotificationListenerService")
+                Toast.makeText(
+                    activity, getString(R.string.finished), Toast.LENGTH_SHORT
+                ).show()
+            })
+        TextSummaryWithArrow(
+            TextSummaryV(
+                textId = R.string.reset_configuration
+            ) {
+                MIUIDialog(activity) {
+                    setTitle(R.string.warning)
+                    setMessage(R.string.reset_configuration_tips)
+                    setLButton(R.string.cancel) {
+                        dismiss()
+                    }
+                    setRButton(R.string.done) {
+                        MIUIActivity.safeSP.mSP?.edit()?.clear()?.apply()
+                        Toast.makeText(
+                            activity, getString(R.string.finished), Toast.LENGTH_SHORT
+                        ).show()
+                        exitProcess(0)
+                    }
+                }.show()
+            })
         Line()
         TitleText(textId = R.string.reboot)
-        TextSummaryWithArrow(TextSummaryV(
-            textId = R.string.restart_all_scope
-        ) {
-            MIUIDialog(activity) {
-                setTitle(R.string.warning)
-                setMessage(R.string.restart_all_scope_tips)
-                setLButton(R.string.cancel) {
-                    dismiss()
-                }
-                setRButton(R.string.done) {
-                    PACKAGE_NAME_HOOKED.forEach {
-                        if (it != "android") Terminal.exec("killall $it")
+        TextSummaryWithArrow(
+            TextSummaryV(
+                textId = R.string.restart_all_scope
+            ) {
+                MIUIDialog(activity) {
+                    setTitle(R.string.warning)
+                    setMessage(R.string.restart_all_scope_tips)
+                    setLButton(R.string.cancel) {
+                        dismiss()
                     }
-                    Toast.makeText(
-                        activity, getString(R.string.finished), Toast.LENGTH_SHORT
-                    ).show()
-                    dismiss()
-                }
-            }.show()
-        })
-        TextSummaryWithArrow(TextSummaryV(
-            textId = R.string.reboot_system
-        ) {
-            MIUIDialog(activity) {
-                setTitle(R.string.warning)
-                setMessage(R.string.reboot_tips)
-                setLButton(R.string.cancel) {
-                    dismiss()
-                }
-                setRButton(R.string.done) {
-                    Terminal.exec("/system/bin/sync;/system/bin/svc power reboot || reboot")
-                }
-            }.show()
-        })
+                    setRButton(R.string.done) {
+                        PACKAGE_NAME_HOOKED.forEach {
+                            if (it != "android") Terminal.exec("killall $it")
+                        }
+                        Toast.makeText(
+                            activity, getString(R.string.finished), Toast.LENGTH_SHORT
+                        ).show()
+                        dismiss()
+                    }
+                }.show()
+            })
+        TextSummaryWithArrow(
+            TextSummaryV(
+                textId = R.string.reboot_system
+            ) {
+                MIUIDialog(activity) {
+                    setTitle(R.string.warning)
+                    setMessage(R.string.reboot_tips)
+                    setLButton(R.string.cancel) {
+                        dismiss()
+                    }
+                    setRButton(R.string.done) {
+                        Terminal.exec("/system/bin/sync;/system/bin/svc power reboot || reboot")
+                    }
+                }.show()
+            })
     }
 }

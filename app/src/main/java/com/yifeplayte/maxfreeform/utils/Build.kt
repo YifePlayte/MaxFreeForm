@@ -38,4 +38,13 @@ object Build {
             clazzSystemProperties, "getInt", null, "ro.mi.os.version.code", -1
         ) != -1
     }
+
+    /**
+     * HyperOS 主版本号
+     */
+    val HYPER_OS_VERSION_CODE by lazy {
+        invokeStaticMethodBestMatch(
+            clazzSystemProperties, "getInt", null, "ro.mi.os.version.code", -1
+        ) as Int
+    }
 }
