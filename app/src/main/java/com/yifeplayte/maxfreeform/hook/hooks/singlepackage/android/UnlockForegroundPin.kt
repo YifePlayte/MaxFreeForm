@@ -14,12 +14,8 @@ object UnlockForegroundPin : BaseHook() {
     override fun hook() =
         if (IS_HYPER_OS) initForHyperOS() else MiuiUnlockForegroundPin().initForMIUI()
 
-    private val clazzMiuiFreeFormGestureController by lazy {
-        loadClass("com.android.server.wm.MiuiFreeFormGestureController")
-    }
-
     private fun initForHyperOS() {
-        clazzMiuiFreeFormGestureController.methodFinder().filterByName("needForegroundPin").first()
+        loadClass("com.android.server.wm.MiuiFreeFormGestureController").methodFinder().filterByName("needForegroundPin").first()
             .createHook {
                 before {
                     val packageName =
