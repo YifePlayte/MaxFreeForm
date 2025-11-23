@@ -1,10 +1,15 @@
 package com.yifeplayte.maxfreeform.hook.hooks.singlepackage.systemui
 
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClassOrNull
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadFirstClassOrNull
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.ObjectUtils.getObjectOrNull
+import com.github.kyuubiran.ezxhelper.ObjectUtils.getObjectOrNullAs
+import com.github.kyuubiran.ezxhelper.ObjectUtils.getObjectOrNullUntilSuperclassAs
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.yifeplayte.maxfreeform.hook.hooks.BaseHook
 import com.yifeplayte.maxfreeform.utils.Build.IS_HYPER_OS
+import de.robv.android.xposed.XC_MethodReplacement.returnConstant
 
 @Suppress("unused")
 object RemoveFreeformBottomBar : BaseHook() {
@@ -16,9 +21,17 @@ object RemoveFreeformBottomBar : BaseHook() {
                 returnConstant(null)
             }
         loadClassOrNull("com.android.wm.shell.multitasking.miuimultiwinswitch.miuiwindowdecor.MiuiBottomDecoration")
-            ?.methodFinder()?.filterByName("needBottomCaption")?.first()
-            ?.createHook {
+            ?.methodFinder()?.filterByName("needBottomCaption")?.first()?.createHook {
                 returnConstant(false)
+            }
+        loadClassOrNull("com.android.wm.shell.multitasking.miuimultiwinswitch.miuiwindowdecor.decoration.MiuiDecorationBottom")
+            ?.methodFinder()?.filterByName("needCaption")?.first()?.createHook {
+                before {
+                    val mWindowingMode = getObjectOrNullUntilSuperclassAs<Int>(it.thisObject, "mWindowingMode")
+                    if (mWindowingMode == 5) {
+                        it.result = false
+                    }
+                }
             }
     }
 }
