@@ -2,6 +2,7 @@ package com.yifeplayte.maxfreeform.hook.hooks.singlepackage.systemui
 
 import android.content.ComponentName
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClassOrNull
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadFirstClassOrNull
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
@@ -22,7 +23,10 @@ object RemoveFreeformTopBar : BaseHook() {
                     it.result = false
                 }
             }
-        loadClassOrNull("com.android.wm.shell.multitasking.miuimultiwinswitch.miuiwindowdecor.MiuiTopDecoration")?.methodFinder()
+        loadFirstClassOrNull(
+            "com.android.wm.shell.multitasking.miuimultiwinswitch.miuiwindowdecor.MiuiTopDecoration",
+            "com.android.wm.shell.multitasking.miuimultiwinswitch.miuiwindowdecor.decoration.MiuiDecorationDot",
+        )?.methodFinder()
             ?.filterByName("getBooleanProperty")?.filterNonAbstract()?.toList()?.createHooks {
                 before {
                     it.result = false
