@@ -156,7 +156,7 @@ object AddFreeformShortcut : BaseHook() {
                                     appContext.let {
                                         it.getDrawable(
                                             it.resources.getIdentifier(
-                                                "ic_task_small_window", "drawable", hostPackageName
+                                                "shortcut_menu_size_adapt", "drawable", hostPackageName
                                             )
                                         )
                                     })
@@ -177,7 +177,7 @@ object AddFreeformShortcut : BaseHook() {
                                     appContext.let {
                                         it.getDrawable(
                                             it.resources.getIdentifier(
-                                                "ic_task_add_pair", "drawable", hostPackageName
+                                                "add_pair_to_workspace", "drawable", hostPackageName
                                             )
                                         )
                                     })
