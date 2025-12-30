@@ -15,8 +15,8 @@ object UnlockForegroundPin : BaseHook() {
         if (IS_HYPER_OS) initForHyperOS() else MiuiUnlockForegroundPin().initForMIUI()
 
     private fun initForHyperOS() {
-        loadClass("com.android.server.wm.MiuiFreeFormGestureController").methodFinder().filterByName("needForegroundPin").first()
-            .createHook {
+        loadClass("com.android.server.wm.MiuiFreeFormGestureController").methodFinder()
+            .filterByName("needForegroundPin").filterNonAbstract().single().createHook {
                 before {
                     val packageName =
                         invokeMethodBestMatch(it.args[0], "getStackPackageName") as String
