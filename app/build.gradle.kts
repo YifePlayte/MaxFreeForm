@@ -17,8 +17,8 @@ android {
         applicationId = "com.yifeplayte.maxfreeform"
         minSdk = 31
         targetSdk = 34
-        versionCode = 27
-        versionName = "4.0.1"
+        versionCode = 28
+        versionName = "4.1.0"
 
         applicationVariants.configureEach {
             outputs.configureEach {
