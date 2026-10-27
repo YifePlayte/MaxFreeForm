@@ -16,8 +16,8 @@ android {
         applicationId = "com.yifeplayte.maxfreeform"
         minSdk = 33
         targetSdk = 37
-        versionCode = 28
-        versionName = "4.1.0"
+        versionCode = 29
+        versionName = "5.0.0"
 
         ndk {
             abiFilters.add("arm64-v8a")
