@@ -27,4 +27,8 @@ namespace maxfreeform::hooks {
 // Dart objects from native code.
 bool InstallAddFreeformShortcutHook(const dart::Image& image);
 
+// Use the add-to-workspace artwork at full alpha for the multiple-window icon,
+// without changing theme tint or disabled states. Shares add_freeform_shortcut.
+bool InstallFreeformShortcutIconHook(const dart::Image& image);
+
 }  // namespace maxfreeform::hooks

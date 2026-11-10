@@ -154,6 +154,30 @@ uid/pid/`/proc/<pid>/cmdline` against `com.miui.home`, and answers
 - The transaction code must not collide with other modules. WOMMO uses "WOM";
   MaxFreeForm uses "MFF".
 
+### Multiple-window shortcut icon
+
+- `freeform_shortcut_icon_hook.cpp` shares the `add_freeform_shortcut` feature
+  bit. It only swaps the stock multiple-window artwork for the add-to-workspace
+  artwork at full alpha; menu validity, tint, scaling and disabled states are
+  untouched, and the real add-to-workspace asset passes through unchanged.
+- The launcher decodes menu assets with its bundled Skia/libwebp, so the hook
+  rewrites the encoded WebP at that entry. The NDK `AImageDecoder` import is NOT
+  this asset's path and never proves replacement.
+- Target the LLVM-promoted private entry `(bytes, size, state)`, not public
+  four-argument `WebPDemuxInternal`. Require a unique entry fingerprint plus its
+  known null-return block; fail closed otherwise.
+- Identify the stock asset by length plus a 64-bit FNV-1a digest instead of
+  embedding a copy for `memcmp`. The digest only selects which bytes to hand to
+  libwebp; the launcher's own decoder validates the image afterwards. Keep the
+  replacement array immutable for the process lifetime. No runtime WebP
+  dependency is added.
+- Protect the patched entry with the shared LSPlt `madvise` guard before writing.
+  The compat AAR provides the legacy `MapInfo::Scan()` ABI used to locate it.
+- The same two assets are byte-identical in 7722, 7726, 7748, 7751, 8565, 8583
+  and 8602, and the entry fingerprint is unique in each checked runtime.
+- The swap appears on image decode in a fresh launcher process. Build success is
+  not a substitute for the on-device menu check.
+
 ### Patching Dart AOT
 
 - The shared `NativeHookKit` (`native-hook-kit`) provides image lookup, unique

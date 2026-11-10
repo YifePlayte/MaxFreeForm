@@ -16,6 +16,7 @@ endif()
 set(MAXFREEFORM_NATIVE_SOURCES
     maxfreeform_native.cpp
     hooks/add_freeform_shortcut_hook.cpp
+    hooks/freeform_shortcut_icon_hook.cpp
 )
 
 set(NATIVE_HOOK_KIT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../../native-hook-kit" CACHE PATH "NativeHookKit source directory")

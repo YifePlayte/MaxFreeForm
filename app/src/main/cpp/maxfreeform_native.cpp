@@ -74,6 +74,8 @@ struct DartHook {
 constexpr DartHook kDartHooks[] = {
     {"add_freeform_shortcut", maxfreeform::config::kAddFreeformShortcut,
      &maxfreeform::hooks::InstallAddFreeformShortcutHook},
+    {"add_freeform_shortcut_icon", maxfreeform::config::kAddFreeformShortcut,
+     &maxfreeform::hooks::InstallFreeformShortcutIconHook},
 };
 
 bool AcceptLauncherDartPath(const char* path) {
